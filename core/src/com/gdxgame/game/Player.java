@@ -39,7 +39,7 @@ public class Player {
     public Player(float x, float y) {
         this.x = x;
         this.y = y;
-        this.gravity = 1f;
+        this.gravity = 0.9f;
 
         this.dx = 0;
         this.dy = 0;
@@ -64,10 +64,10 @@ public class Player {
 
     public void update(float deltaTime) {
         // if I'm pressing right
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
             this.dx = 3;
             this.elapsed = this.elapsed + deltaTime;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
             this.dx = -3;
             this.elapsed = this.elapsed + deltaTime;
         } else {
@@ -75,7 +75,8 @@ public class Player {
             this.elapsed = 0;
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.W)
+                || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             this.dy = 15;
          
         }
@@ -121,6 +122,7 @@ public class Player {
                 } else {
                     // move the player up
                     this.y = this.y + height;
+                    this.dy = 0;
                 }
             }
             
