@@ -32,7 +32,7 @@ public class MainGame implements Screen {
     private float offsetX, offsetY;
     // game units
     private final int WIDTH = 800, HEIGHT = 600;
-    private final int START_X = 100, START_Y = 100;
+    private final int START_X = 0, START_Y = 1050;
 
     public MainGame(ICS4UIgame game) {
         this.game = game;
@@ -76,7 +76,7 @@ public class MainGame implements Screen {
         // render the world
         world.render(camera);
 
-
+        
         camera.position.set(p1.getX(), p1.getY(), 0);
 
 
