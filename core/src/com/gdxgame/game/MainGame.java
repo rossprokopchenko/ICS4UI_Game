@@ -51,6 +51,7 @@ public class MainGame implements Screen {
         this.camera.position.set(WIDTH / 2, HEIGHT / 2, 0);
         // make sure to apply the changes
         this.camera.update();
+
     }
 
     @Override
@@ -59,7 +60,9 @@ public class MainGame implements Screen {
 
     @Override
     public void render(float deltaTime) {
-        // update the player
+        float cameraX = 0;
+        float cameraY = 1050;
+// update the player
         p1.update(deltaTime);
 
         for (Rectangle block : world.getBlocks()) {
@@ -75,10 +78,22 @@ public class MainGame implements Screen {
 
         // render the world
         world.render(camera);
-
-        
-        camera.position.set(p1.getX(), p1.getY(), 0);
-
+        // Make this work after 1200
+        //
+        //
+        //
+        //
+        //
+        int min = 1;
+        int max = 3;
+        if (p1.getX() / 400 >= min && p1.getX() / 400 < max) {
+            float num = (min * 400 + max * 400) / 2;
+            cameraX += num;
+        }
+        min += 2;
+        max += 2;
+        camera.position.set(cameraX, cameraY, 0);
+//        camera.position.set(p1.getX(), p1.getY(), 0);
 
         camera.update();
 
