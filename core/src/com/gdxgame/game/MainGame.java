@@ -10,9 +10,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
@@ -26,6 +26,7 @@ public class MainGame implements Screen {
     private Player p1;
     // sprite batch
     private SpriteBatch batch;
+    private ShapeRenderer shape;
     // camera and viewport
     private OrthographicCamera camera;
     private Viewport view;
@@ -40,6 +41,7 @@ public class MainGame implements Screen {
         this.world = new World();
         // initialize the spritebatch
         this.batch = game.getBatch();
+        this.shape = p1.getShape();
 
         // set up the camera and view
         this.offsetX = 0;
@@ -87,6 +89,7 @@ public class MainGame implements Screen {
         batch.begin();
 
         p1.render(batch);
+        p1.render(shape, camera);
 
         batch.end();
     }
