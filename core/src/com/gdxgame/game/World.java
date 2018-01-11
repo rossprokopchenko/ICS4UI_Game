@@ -1,5 +1,6 @@
 package com.gdxgame.game;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -18,13 +19,14 @@ public class World {
         blocks[1] = new Rectangle(80, 25, 200, 20);
         blocks[2] = new Rectangle(60, 25, 20, 100);
         blocks[3] = new Rectangle(-100, 125, 100, 20);
-        blocks[4] = new Rectangle(-120, 125, 20, 200);
+        blocks[4] = new Rectangle(-120, 125, 20, 250);
         blocks[5] = new Rectangle(280, 125, 600, 20);
         shape = new ShapeRenderer();
     }
     
     public void render(OrthographicCamera camera){
         shape.setProjectionMatrix(camera.combined);
+        shape.setColor(Color.CHARTREUSE);
         shape.begin(ShapeRenderer.ShapeType.Line);
         
         for (int i = 0; i < blocks.length; i++) {

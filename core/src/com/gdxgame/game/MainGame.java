@@ -88,7 +88,7 @@ public class MainGame implements Screen {
 
         batch.begin();
 
-        p1.render(batch);
+        // p1.render(batch);
         p1.render(shape, camera);
 
         batch.end();

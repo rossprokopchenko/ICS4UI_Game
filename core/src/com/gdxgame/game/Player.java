@@ -17,7 +17,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import java.util.ArrayList;
 
 /**
  *
@@ -29,7 +28,7 @@ public class Player {
     private float x;
     private float y;
     private final float START_X, START_Y;
-    private final float MAX_DY = 19.0f;
+    private final float MAX_DY = 18.1f;
     private float elapsed;
     private Animation<TextureRegion> runRight;
     private Animation<TextureRegion> runLeft;
@@ -101,7 +100,7 @@ public class Player {
         if ((Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.W)
                 || Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
                 && !jumped) {
-            this.dy = 35;
+            this.dy = 31;
             jumped = true;
 
         }
@@ -120,7 +119,7 @@ public class Player {
         this.x = this.x + this.dx;
         this.y = this.y + this.dy;
 
-//        System.out.println("x: " + (x+bounds.width) + "  y: " + y);
+        System.out.println("dx: " + dx + "  dy: " + dy);
 
         // update collision rectangle
         this.bounds.setX(this.x);
