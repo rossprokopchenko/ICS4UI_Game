@@ -10,9 +10,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
@@ -26,6 +26,7 @@ public class MainGame implements Screen {
     private Player p1;
     // sprite batch
     private SpriteBatch batch;
+    private ShapeRenderer shape;
     // camera and viewport
     private OrthographicCamera camera;
     private Viewport view;
@@ -40,6 +41,7 @@ public class MainGame implements Screen {
         this.world = new World();
         // initialize the spritebatch
         this.batch = game.getBatch();
+        this.shape = p1.getShape();
 
         // set up the camera and view
         this.offsetX = 0;
@@ -60,8 +62,8 @@ public class MainGame implements Screen {
 
     @Override
     public void render(float deltaTime) {
-        float cameraX = 0;
-        float cameraY = 1050;
+        float cameraX = 100;
+        float cameraY = 100;
 // update the player
         p1.update(deltaTime);
 
@@ -78,30 +80,33 @@ public class MainGame implements Screen {
 
         // render the world
         world.render(camera);
-        // Make this work after 1200
-        //
-        //
-        //
-        //
-        //
-        int min = 1;
-        int max = 3;
-        if (p1.getX() / 400 >= min && p1.getX() / 400 < max) {
-            float num = (min * 400 + max * 400) / 2;
-            cameraX += num;
+        // Move the screen horizontally when the player moves off of it
+        float numX = p1.getX();
+        int counter = 0;
+        if (p1.getX() <= 400 && p1.getX() >= 0) {
+            counter = 0;
+        } else if (p1.getX() < 0) {
+            while (numX <= 0) {
+
+                counter--;
+                System.out.println(counter);
+                numX = WIDTH;
+            }
+        } else {
+            while (numX >= WIDTH) {
+                counter++;
+                numX -= WIDTH;
+            }
         }
-        min += 2;
-        max += 2;
-        camera.position.set(cameraX, cameraY, 0);
-//        camera.position.set(p1.getX(), p1.getY(), 0);
 
+        camera.position.set(400 + (counter * 800), cameraY, 0);
         camera.update();
-
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
 
         p1.render(batch);
+        p1.render(shape, camera);
 
         batch.end();
     }
