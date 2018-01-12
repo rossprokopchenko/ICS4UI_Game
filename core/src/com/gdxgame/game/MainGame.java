@@ -30,7 +30,6 @@ public class MainGame implements Screen {
     // camera and viewport
     private OrthographicCamera camera;
     private Viewport view;
-    private float offsetX, offsetY;
     // game units
     private final int WIDTH = 800, HEIGHT = 600;
     private final int START_X = 0, START_Y = 1050;
@@ -44,9 +43,6 @@ public class MainGame implements Screen {
         this.shape = p1.getShape();
 
         // set up the camera and view
-        this.offsetX = 0;
-        this.offsetY = 0;
-
         this.camera = new OrthographicCamera(WIDTH, HEIGHT);
         this.view = new ExtendViewport(WIDTH, HEIGHT, camera);
         // move the camera to the center
@@ -82,24 +78,42 @@ public class MainGame implements Screen {
         world.render(camera);
         // Move the screen horizontally when the player moves off of it
         float numX = p1.getX();
-        int counter = 0;
-        if (p1.getX() <= 400 && p1.getX() >= 0) {
-            counter = 0;
-        } else if (p1.getX() < 0) {
+        int counterX = 0;
+        // when the screen is between 0 and the screen width do nothing
+        if (p1.getX() <= WIDTH && p1.getX() >= 0) {
+        } // when the player is to the left of the initial screen
+        else if (p1.getX() < 0) {
             while (numX <= 0) {
-
-                counter--;
-                System.out.println(counter);
+                counterX--;
                 numX = WIDTH;
             }
-        } else {
+        } // when the player is to the right of the initial screen
+        else {
             while (numX >= WIDTH) {
-                counter++;
+                counterX++;
                 numX -= WIDTH;
             }
         }
 
-        camera.position.set(400 + (counter * 800), cameraY, 0);
+        // Move the screen vertically when the player moves off of it
+        float numY = p1.getY();
+        int counterY = 0;
+        // When player is between initial screen height and 0, do nothing
+        if (p1.getY() <= HEIGHT && p1.getY() >= 0) {
+        } // when player is below 0
+        else if (p1.getY() < 0) {
+            while (numY < 0) {
+                counterY--;
+                numY += HEIGHT;
+            }
+        } // when player is above initial screen height
+        else {
+            while (numY >= HEIGHT) {
+                counterY++;
+                numY -= HEIGHT;
+            }
+        }
+        camera.position.set(WIDTH / 2 + (counterX * WIDTH), HEIGHT / 2 + (counterY * HEIGHT), 0);
         camera.update();
         batch.setProjectionMatrix(camera.combined);
 
