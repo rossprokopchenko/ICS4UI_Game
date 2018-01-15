@@ -34,11 +34,13 @@ public class MainGame implements Screen {
     // game units
     private final int WIDTH = 800, HEIGHT = 600;
     private final int START_X = 100, START_Y = 100;
+    
 
     public MainGame(ICS4UIgame game) {
         this.game = game;
-        this.p1 = new Player(START_X, START_Y);
         this.world = new World();
+        this.p1 = new Player(START_X, START_Y, world);
+        
         // initialize the spritebatch
         this.batch = game.getBatch();
         this.shape = p1.getShape();
@@ -64,10 +66,10 @@ public class MainGame implements Screen {
         // update the player
         p1.update(deltaTime);
 
-        for (Rectangle block : world.getBlocks()) {
+        for (Rectangle block : world.getLevels().get(world.getCurrentLevel()).getBlocks()) {
             p1.fixCollision(block);
         }
-
+        
         // get the SpriteBatch from the Game
         SpriteBatch batch = game.getBatch();
 
