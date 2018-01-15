@@ -17,7 +17,9 @@ import com.gdxgame.game.levels.Level2;
 public class World {
 
     private Rectangle[] blocks;
+
     private Rectangle portal;
+  
     private ShapeRenderer shape;
     private Level level;
     private Array<Level> levels;
@@ -55,7 +57,7 @@ public class World {
         shape.rect(portal.x, portal.y, portal.width, portal.height);
         
         portal = levels.get(this.currentLevel).getPortal();
-        
+      
         shape.end();
     }
 
@@ -78,6 +80,7 @@ public class World {
     public void setCurrentLevel(int currentLevel) {
         this.currentLevel = currentLevel;
     }
+
     
     public Rectangle getPortal(){
         return portal;
