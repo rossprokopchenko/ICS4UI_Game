@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
  *
- * @author prokr8056
+ * @author Ross, Kwame, Junaid
  */
 public class MainGame implements Screen {
 
@@ -38,7 +38,7 @@ public class MainGame implements Screen {
         this.game = game;
         this.world = new World();
         this.p1 = new Player(START_X, START_Y, world);
-        
+
         // initialize the spritebatch
         this.batch = game.getBatch();
         this.shape = p1.getShape();
@@ -48,6 +48,8 @@ public class MainGame implements Screen {
         this.view = new ExtendViewport(WIDTH, HEIGHT, camera);
         // move the camera to the center
         this.camera.position.set(WIDTH / 2, HEIGHT / 2, 0);
+
+        this.camera.zoom = 2;
         // make sure to apply the changes
         this.camera.update();
 
@@ -61,13 +63,14 @@ public class MainGame implements Screen {
     public void render(float deltaTime) {
         float cameraX = 100;
         float cameraY = 100;
-// update the player
+        
+        // update the player
         p1.update(deltaTime);
 
         for (Rectangle block : world.getLevels().get(world.getCurrentLevel()).getBlocks()) {
             p1.fixCollision(block);
         }
-        
+
         // get the SpriteBatch from the Game
         SpriteBatch batch = game.getBatch();
 
@@ -77,6 +80,7 @@ public class MainGame implements Screen {
 
         // render the world
         world.render(camera);
+        
         // Move the screen horizontally when the player moves off of it
         float numX = p1.getX();
         int counterX = 0;
