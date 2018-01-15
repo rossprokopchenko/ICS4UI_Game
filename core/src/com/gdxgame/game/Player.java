@@ -17,7 +17,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import java.util.ArrayList;
 
 /**
  *
@@ -29,7 +28,7 @@ public class Player {
     private float x;
     private float y;
     private final float START_X, START_Y;
-    private final float MAX_DY = 19.0f;
+    private final float MAX_DY = 18.1f;
     private float elapsed;
     private Animation<TextureRegion> runRight;
     private Animation<TextureRegion> runLeft;
@@ -44,13 +43,13 @@ public class Player {
     private ShapeRenderer shape;
     private World world;
 
-    public Player(float x, float y) {
+    public Player(float x, float y, World world) {
         this.START_X = x;
         this.START_Y = y;
-        
+
         this.x = START_X;
         this.y = START_Y;
-        
+
         this.gravity = 1.9f;
 
         this.dx = 0;
@@ -61,7 +60,7 @@ public class Player {
         this.atlas = new TextureAtlas("packed/player.atlas");
         this.stand = atlas.findRegion("stand");
         this.shape = new ShapeRenderer();
-        this.world = new World();
+        this.world = world;
 
         runRight = new Animation(1f / 10f, atlas.findRegions("run"));
 
@@ -101,12 +100,12 @@ public class Player {
         if ((Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.W)
                 || Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
                 && !jumped) {
-            this.dy = 35;
+            this.dy = 31;
             jumped = true;
 
         }
-        
-        if(Gdx.input.isKeyJustPressed(Input.Keys.R)){
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
             this.x = this.START_X;
             this.y = this.START_Y;
         }
@@ -120,7 +119,7 @@ public class Player {
         this.x = this.x + this.dx;
         this.y = this.y + this.dy;
 
-//        System.out.println("x: " + (x+bounds.width) + "  y: " + y);
+//         System.out.println("dx: " + dx + "  dy: " + dy);
 
         // update collision rectangle
         this.bounds.setX(this.x);
@@ -134,7 +133,7 @@ public class Player {
 
             float width = Math.min(bounds.x + bounds.width, block.x + block.width) - Math.max(bounds.x, block.x);
             float height = Math.min(bounds.y + bounds.height, block.y + block.height) - Math.max(bounds.y, block.y);
-            
+
             // seperate the axis by finding the least amount of collision
             if (width < height) {
                 // on the left
@@ -168,7 +167,18 @@ public class Player {
             bounds.setY(this.y);
         }
         
-        
+        if(bounds.overlaps(world.getPortal())){
+            world.setCurrentLevel(world.getCurrentLevel() + 1);
+            
+            this.x = world.getLevels().get(world.getCurrentLevel()).getSpawnX();
+            this.y = world.getLevels().get(world.getCurrentLevel()).getSpawnY();
+            
+            // update the collision box to match the player
+            bounds.setX(this.x);
+            bounds.setY(this.y);
+        }
+
+
     }
 
     public void render(SpriteBatch batch) {
