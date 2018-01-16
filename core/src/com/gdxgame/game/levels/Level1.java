@@ -10,6 +10,7 @@ public class Level1 extends Level {
 
     // array of blocks of the level
     private Rectangle[] blocks;
+    
     // portal of the level
     private Rectangle portal;
     // spawn coordinates of the level
@@ -24,9 +25,10 @@ public class Level1 extends Level {
         this.SPAWN_X = 100;
         this.SPAWN_Y = 100;
         
+        // level's bounds
+        blocks[0] = new Rectangle(-20, 0, 20, 500);
+        blocks[1] = new Rectangle(2600, 0, 20, 500);
         // level's blocks
-        blocks[0] = new Rectangle(-20, 20, 20, 500);
-        blocks[1] = new Rectangle(2600, 20, 20, 500);
         blocks[2] = new Rectangle(0, 0, 200, 20);
         blocks[3] = new Rectangle(600, 0, 400, 20);
         blocks[4] = new Rectangle(1400, 0, 400, 20);
@@ -70,5 +72,46 @@ public class Level1 extends Level {
     @Override
     public float getSpawnY() {
         return SPAWN_Y;
+    }
+
+    @Override
+    public float getHighestX() {
+        float x = 0;
+        
+        for (int i = 2; i < blocks.length; i++) {
+            if(x < blocks[i].x){
+                x = blocks[i].x + blocks[i].width;
+            }
+        }
+        
+        return x;
+    }
+
+    @Override
+    public float getLowestY() {
+        float y = 0;
+        
+        for (int i = 2; i < blocks.length; i++) {
+            if(y < blocks[i].y){
+                
+            } else {
+                y = blocks[i].y - blocks[i].height;
+            }
+        }
+        
+        return y;
+    }
+
+    @Override
+    public float getHighestY() {
+        float y = 0;
+        
+        for (int i = 2; i < blocks.length; i++) {
+            if(y < blocks[i].y){
+                y = blocks[i].y;
+            }
+        }
+        
+        return y;
     }
 }

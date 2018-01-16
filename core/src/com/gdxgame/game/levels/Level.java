@@ -23,4 +23,10 @@ public abstract class Level {
     public abstract float getSpawnX();
     
     public abstract float getSpawnY();
+    
+    public abstract float getHighestX();
+    
+    public abstract float getLowestY();
+    
+    public abstract float getHighestY();
 }

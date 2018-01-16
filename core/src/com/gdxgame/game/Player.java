@@ -130,8 +130,8 @@ public class Player {
         // if pressed R
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
             // teleport the player to the start position of the level
-            this.x = this.START_X;
-            this.y = this.START_Y;
+            this.x = world.getLevels().get(world.getCurrentLevel()).getSpawnX();
+            this.y = world.getLevels().get(world.getCurrentLevel()).getSpawnY();
 
             this.cameraReset = true;
         }
@@ -194,7 +194,7 @@ public class Player {
         }
 
         // if the player collides with the end portal
-        if (bounds.overlaps(world.getPortal())) {
+        if (bounds.overlaps(world.getPortal()) && world.getCurrentLevel() < world.getNumLevels() - 1) {
             // set the level to the next
             world.setCurrentLevel(world.getCurrentLevel() + 1);
 
