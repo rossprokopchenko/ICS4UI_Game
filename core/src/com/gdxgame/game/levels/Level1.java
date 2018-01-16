@@ -17,18 +17,20 @@ public class Level1 extends Level {
 
     public Level1() {
         // initializes blocks
-        blocks = new Rectangle[4];
+        blocks = new Rectangle[6];
         // initializes the portal
-        portal = new Rectangle(2350, 40, 25, 25);
+        portal = new Rectangle(2550, 40, 25, 25);
         // spawn coordinates of the level
         this.SPAWN_X = 100;
         this.SPAWN_Y = 100;
         
         // level's blocks
-        blocks[0] = new Rectangle(0, 0, 200, 20);
-        blocks[1] = new Rectangle(600, 0, 400, 20);
-        blocks[2] = new Rectangle(1400, 0, 400, 20);
-        blocks[3] = new Rectangle(2200, 0, 400, 20);
+        blocks[0] = new Rectangle(-20, 20, 20, 500);
+        blocks[1] = new Rectangle(2600, 20, 20, 500);
+        blocks[2] = new Rectangle(0, 0, 200, 20);
+        blocks[3] = new Rectangle(600, 0, 400, 20);
+        blocks[4] = new Rectangle(1400, 0, 400, 20);
+        blocks[5] = new Rectangle(2200, 0, 400, 20);
     }
 
     /**

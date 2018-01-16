@@ -30,6 +30,7 @@ public class MainGame implements Screen {
     // camera and viewport
     private OrthographicCamera camera;
     private Viewport view;
+    private float offsetX, offsetY;
     // game units
     private final int WIDTH = 800, HEIGHT = 600;
     private final int START_X = 100, START_Y = 100;
@@ -47,9 +48,12 @@ public class MainGame implements Screen {
         this.camera = new OrthographicCamera(WIDTH, HEIGHT);
         this.view = new ExtendViewport(WIDTH, HEIGHT, camera);
         // move the camera to the center
-        this.camera.position.set(WIDTH / 2, HEIGHT / 2, 0);
+        this.camera.position.set(WIDTH / 2, HEIGHT / 2 - 100, 0);
+        
+        this.offsetX = 0;
+        this.offsetY = 0;
 
-        this.camera.zoom = 2;
+        this.camera.zoom = 1.25f;
         // make sure to apply the changes
         this.camera.update();
 
@@ -61,8 +65,6 @@ public class MainGame implements Screen {
 
     @Override
     public void render(float deltaTime) {
-        float cameraX = 100;
-        float cameraY = 100;
         
         // update the player
         p1.update(deltaTime);
@@ -81,44 +83,25 @@ public class MainGame implements Screen {
         // render the world
         world.render(camera);
         
-        // Move the screen horizontally when the player moves off of it
-        float numX = p1.getX();
-        int counterX = 0;
-        // when the screen is between 0 and the screen width do nothing
-        if (p1.getX() <= WIDTH && p1.getX() >= 0) {
-        } // when the player is to the left of the initial screen
-        else if (p1.getX() < 0) {
-            while (numX <= 0) {
-                counterX--;
-                numX = WIDTH;
-            }
-        } // when the player is to the right of the initial screen
-        else {
-            while (numX >= WIDTH) {
-                counterX++;
-                numX -= WIDTH;
-            }
+        // CAMERA
+        
+        float levelSizeX = world.getLevels().get(world.getCurrentLevel()).getBlock(world.getLevels().get(world.getCurrentLevel()).getNumBlocks() - 1).x +
+                world.getLevels().get(world.getCurrentLevel()).getBlock(world.getLevels().get(world.getCurrentLevel()).getNumBlocks() - 1).width;
+        
+        if(p1.getX() > WIDTH / 2 && p1.getX() + WIDTH / 2 < levelSizeX){
+            offsetX = p1.getX() - WIDTH / 2;
+            camera.position.x = p1.getX();
         }
-
-        // Move the screen vertically when the player moves off of it
-        float numY = p1.getY();
-        int counterY = 0;
-        // When player is between initial screen height and 0, do nothing
-        if (p1.getY() <= HEIGHT && p1.getY() >= 0) {
-        } // when player is below 0
-        else if (p1.getY() < 0) {
-            while (numY < 0) {
-                counterY--;
-                numY += HEIGHT;
-            }
-        } // when player is above initial screen height
-        else {
-            while (numY >= HEIGHT) {
-                counterY++;
-                numY -= HEIGHT;
-            }
+        
+            
+        
+        
+        if(p1.getCameraReset()){
+            this.camera.position.set(WIDTH / 2, HEIGHT / 2 - 100, 0);
+            this.offsetX = 0;
+            p1.setCameraReset(false);
         }
-        camera.position.set(WIDTH / 2 + (counterX * WIDTH), HEIGHT / 2 + (counterY * HEIGHT), 0);
+        
         camera.update();
         batch.setProjectionMatrix(camera.combined);
 

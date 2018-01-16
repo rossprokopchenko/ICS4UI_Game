@@ -54,7 +54,7 @@ public class World {
         shape.begin(ShapeRenderer.ShapeType.Line);
 
         // renders all shapes of the level
-        for (int i = 0; i < levels.get(this.currentLevel).getNumBlocks(); i++) {
+        for (int i = 0; i < levels.get(this.currentLevel).getNumBlocks(); i++) {            
             float x = levels.get(this.currentLevel).getBlock(i).x;
             float y = levels.get(this.currentLevel).getBlock(i).y;
             float width = levels.get(this.currentLevel).getBlock(i).width;
