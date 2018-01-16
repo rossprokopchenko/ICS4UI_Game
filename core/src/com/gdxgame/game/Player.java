@@ -20,28 +20,45 @@ import com.badlogic.gdx.utils.Array;
 
 /**
  *
- * @author lamon
+ * @author Ross, Kwame, Junaid
  */
 public class Player {
 
+    // gravity
     private float gravity;
+    // x and y coordinates of player
     private float x;
     private float y;
+    // x velocity
+    private float dx;
+    // y velocity
+    private float dy;
+    // decay x
+    private float decayX = 0.9f;
+    // max x velocity
+    private final float MAX_DX = 13.0f;
+    // jumped boolean
+    private boolean jumped = false;
+
+    private boolean cameraReset;
+    // spawn coordinates
     private final float START_X, START_Y;
+    // max y velocity
     private final float MAX_DY = 18.1f;
-    private float elapsed;
+
+    // sprite 
     private Animation<TextureRegion> runRight;
     private Animation<TextureRegion> runLeft;
     private TextureRegion stand;
     private TextureAtlas atlas;
-    private float dx;
-    private float dy;
-    private float decayX = 0.9f;
-    private final float MAX_DX = 13.0f;
-    private boolean jumped = false;
-    private Rectangle bounds;
+    // elapsed time for animation
+    private float elapsed;
+
+    // shape renderer and world
     private ShapeRenderer shape;
     private World world;
+    // rectangle bounds of the player
+    private Rectangle bounds;
 
     public Player(float x, float y, World world) {
         this.START_X = x;
@@ -54,7 +71,6 @@ public class Player {
 
         this.dx = 0;
         this.dy = 0;
-
 
         this.elapsed = 0;
         this.atlas = new TextureAtlas("packed/player.atlas");
@@ -73,11 +89,13 @@ public class Player {
 
         runLeft = new Animation(1f / 10f, runLeftArray);
 
+        this.cameraReset = false;
+
         this.bounds = new Rectangle(x, y, 50, 50);
     }
 
     public void update(float deltaTime) {
-        // if I'm pressing right
+        // if pressing right (right arrow or D)
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
             dx = dx + 1; // start ramping up my movement
             // cap my max speed
@@ -85,6 +103,8 @@ public class Player {
                 dx = MAX_DX;
             }
             this.elapsed = this.elapsed + deltaTime;
+
+            // if pressing left (left arrow or A)
         } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
             dx = dx - 1; // start ramping up my movement
             // cap my max speed
@@ -92,35 +112,40 @@ public class Player {
                 dx = -MAX_DX;
             }
             this.elapsed = this.elapsed + deltaTime;
+            // if not moving right or left
         } else {
+            // slow the player down
             dx = (int) (dx * decayX);
             this.elapsed = 0;
         }
 
+        // if jumping (up arrow, W or space)
         if ((Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.W)
                 || Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
                 && !jumped) {
             this.dy = 31;
             jumped = true;
-
         }
 
+        // if pressed R
         if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            // teleport the player to the start position of the level
             this.x = this.START_X;
             this.y = this.START_Y;
+
+            this.cameraReset = true;
         }
 
         // gravity
         if (dy > -MAX_DY) {
             this.dy -= gravity;
-
         }
 
+        // update X and Y coordinates according to the velocity
         this.x = this.x + this.dx;
         this.y = this.y + this.dy;
 
 //         System.out.println("dx: " + dx + "  dy: " + dy);
-
         // update collision rectangle
         this.bounds.setX(this.x);
         this.bounds.setY(this.y);
@@ -143,9 +168,10 @@ public class Player {
                     this.dx = 0;
                     // on the right
                 } else {
-                    // move the player to the right
-                    this.x = this.x + width;
-                    this.dx = 0;
+                        // move the player to the right
+                        this.x = this.x + width;
+                        this.dx = 0;
+                    
                 }
             } else {
                 // under it
@@ -166,19 +192,22 @@ public class Player {
             bounds.setX(this.x);
             bounds.setY(this.y);
         }
-        
-        if(bounds.overlaps(world.getPortal())){
+
+        // if the player collides with the end portal
+        if (bounds.overlaps(world.getPortal())) {
+            // set the level to the next
             world.setCurrentLevel(world.getCurrentLevel() + 1);
-            
+
+            // teleport the player to the start position of the level
             this.x = world.getLevels().get(world.getCurrentLevel()).getSpawnX();
             this.y = world.getLevels().get(world.getCurrentLevel()).getSpawnY();
-            
+
+            this.cameraReset = true;
+
             // update the collision box to match the player
             bounds.setX(this.x);
             bounds.setY(this.y);
         }
-
-
     }
 
     public void render(SpriteBatch batch) {
@@ -189,12 +218,7 @@ public class Player {
             batch.draw(runRight.getKeyFrame(elapsed, true), x, y);
         } else if (this.dx < 0) {
             batch.draw(runLeft.getKeyFrame(elapsed, true), x, y);
-
-
         }
-
-
-
     }
 
     public void render(ShapeRenderer shape, OrthographicCamera camera) {
@@ -217,5 +241,13 @@ public class Player {
 
     public ShapeRenderer getShape() {
         return this.shape;
+    }
+
+    public boolean getCameraReset() {
+        return cameraReset;
+    }
+
+    public void setCameraReset(boolean b) {
+        cameraReset = b;
     }
 }

@@ -13,14 +13,16 @@ public class Level2 extends Level {
     private final float SPAWN_X, SPAWN_Y;
 
     public Level2() {
-        blocks = new Rectangle[2];
-        portal = new Rectangle(0, 0, 25, 25);
+        blocks = new Rectangle[4];
+        portal = new Rectangle(2650, 40, 25, 25);
 
         this.SPAWN_X = 100;
         this.SPAWN_Y = 400;
 
-        blocks[0] = new Rectangle(-100, 25, 400, 20);
-        blocks[1] = new Rectangle(250, 25, 20, 100);
+        blocks[0] = new Rectangle(0, 0, 400, 20);
+        blocks[1] = new Rectangle(900, 0, 200, 20);
+        blocks[2] = new Rectangle(1600, 0, 200, 20);
+        blocks[3] = new Rectangle(2300, 0, 400, 20);
     }
 
     @Override
