@@ -28,7 +28,7 @@ public class World {
 
     public World() {
         // set the current level to the first
-        currentLevel = 0;
+        currentLevel = 2;
         // initializes the levels array
         this.levels = new Array();
 
@@ -73,6 +73,19 @@ public class World {
             shape.rect(x, y, width, height);
 
         }
+        
+        // kill platforms
+        for (int i = 0; i < levels.get(this.currentLevel).getNumKillPlats(); i++) {
+            shape.setColor(Color.RED);
+            
+            float x = levels.get(this.currentLevel).getKillPlat(i).x;
+            float y = levels.get(this.currentLevel).getKillPlat(i).y;
+            float width = levels.get(this.currentLevel).getKillPlat(i).width;
+            float height = levels.get(this.currentLevel).getKillPlat(i).height;
+            
+            shape.rect(x, y, width, height);
+        }
+        
 
         // PORTAL
         // sets the color of the portal

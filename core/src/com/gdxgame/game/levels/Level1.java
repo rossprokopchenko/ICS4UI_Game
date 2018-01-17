@@ -11,6 +11,9 @@ public class Level1 extends Level {
     // array of blocks of the level
     private Rectangle[] blocks;
     
+    // array of kill platforms of the level
+    private Rectangle[] killPlats;
+    
     // portal of the level
     private Rectangle portal;
     // spawn coordinates of the level
@@ -19,6 +22,8 @@ public class Level1 extends Level {
     public Level1() {
         // initializes blocks
         blocks = new Rectangle[6];
+        // initializes kill platforms
+        killPlats = new Rectangle[1];
         // initializes the portal
         portal = new Rectangle(2550, 40, 25, 25);
         // spawn coordinates of the level
@@ -33,6 +38,9 @@ public class Level1 extends Level {
         blocks[3] = new Rectangle(600, 0, 400, 20);
         blocks[4] = new Rectangle(1400, 0, 400, 20);
         blocks[5] = new Rectangle(2200, 0, 400, 20);
+        
+        // level's kill platforms
+        killPlats[0] = new Rectangle(0, -150, 2600, 20);
     }
 
     /**
@@ -57,6 +65,21 @@ public class Level1 extends Level {
     @Override
     public int getNumBlocks() {
         return blocks.length;
+    }
+    
+    @Override
+    public Rectangle[] getKillPlats() {
+        return killPlats;
+    }
+
+    @Override
+    public Rectangle getKillPlat(int i) {
+        return killPlats[i];
+    }
+
+    @Override
+    public int getNumKillPlats() {
+        return killPlats.length;
     }
 
     @Override

@@ -39,13 +39,11 @@ public class Player {
     private final float MAX_DX = 13.0f;
     // jumped boolean
     private boolean jumped = false;
-
     private boolean cameraReset;
     // spawn coordinates
     private final float START_X, START_Y;
     // max y velocity
     private final float MAX_DY = 18.1f;
-
     // sprite 
     private Animation<TextureRegion> runRight;
     private Animation<TextureRegion> runLeft;
@@ -53,7 +51,6 @@ public class Player {
     private TextureAtlas atlas;
     // elapsed time for animation
     private float elapsed;
-
     // shape renderer and world
     private ShapeRenderer shape;
     private World world;
@@ -155,7 +152,6 @@ public class Player {
         // are they colliding?
         if (bounds.overlaps(block)) {
             // calculate how much they are overlaping
-
             float width = Math.min(bounds.x + bounds.width, block.x + block.width) - Math.max(bounds.x, block.x);
             float height = Math.min(bounds.y + bounds.height, block.y + block.height) - Math.max(bounds.y, block.y);
 
@@ -168,10 +164,10 @@ public class Player {
                     this.dx = 0;
                     // on the right
                 } else {
-                        // move the player to the right
-                        this.x = this.x + width;
-                        this.dx = 0;
-                    
+                    // move the player to the right
+                    this.x = this.x + width;
+                    this.dx = 0;
+
                 }
             } else {
                 // under it
@@ -198,6 +194,20 @@ public class Player {
             // set the level to the next
             world.setCurrentLevel(world.getCurrentLevel() + 1);
 
+            // teleport the player to the start position of the level
+            this.x = world.getLevels().get(world.getCurrentLevel()).getSpawnX();
+            this.y = world.getLevels().get(world.getCurrentLevel()).getSpawnY();
+
+            this.cameraReset = true;
+
+            // update the collision box to match the player
+            bounds.setX(this.x);
+            bounds.setY(this.y);
+        }
+    }
+
+    public void collisionKillPlat(Rectangle plat) {
+        if (bounds.overlaps(plat)) {
             // teleport the player to the start position of the level
             this.x = world.getLevels().get(world.getCurrentLevel()).getSpawnX();
             this.y = world.getLevels().get(world.getCurrentLevel()).getSpawnY();

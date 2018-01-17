@@ -9,11 +9,17 @@ import com.badlogic.gdx.math.Rectangle;
 public class Level2 extends Level {
 
     private Rectangle[] blocks;
+    
+    // array of kill platforms of the level
+    private Rectangle[] killPlats;
+    
     private Rectangle portal;
     private final float SPAWN_X, SPAWN_Y;
 
     public Level2() {
         blocks = new Rectangle[6];
+        // initializes kill platforms
+        killPlats = new Rectangle[1];
         portal = new Rectangle(2650, 40, 25, 25);
 
         this.SPAWN_X = 100;
@@ -27,13 +33,25 @@ public class Level2 extends Level {
         blocks[3] = new Rectangle(900, 0, 200, 20);
         blocks[4] = new Rectangle(1600, 0, 200, 20);
         blocks[5] = new Rectangle(2300, 0, 400, 20);
+        
+        // level's kill platforms
+        killPlats[0] = new Rectangle(0, -150, 2700, 20);
     }
 
+    /**
+     * Gets the blocks array of the level
+     * @return the blocks array
+     */
     @Override
     public Rectangle[] getBlocks() {
         return blocks;
     }
 
+    /**
+     * Gets a specific block in the blocks array
+     * @param i the block's number
+     * @return returns the block
+     */
     @Override
     public Rectangle getBlock(int i) {
         return blocks[i];
@@ -42,6 +60,21 @@ public class Level2 extends Level {
     @Override
     public int getNumBlocks() {
         return blocks.length;
+    }
+    
+    @Override
+    public Rectangle[] getKillPlats() {
+        return killPlats;
+    }
+
+    @Override
+    public Rectangle getKillPlat(int i) {
+        return killPlats[i];
+    }
+
+    @Override
+    public int getNumKillPlats() {
+        return killPlats.length;
     }
 
     @Override
@@ -58,7 +91,7 @@ public class Level2 extends Level {
     public float getSpawnY() {
         return SPAWN_Y;
     }
-    
+
     @Override
     public float getHighestX() {
         float x = 0;

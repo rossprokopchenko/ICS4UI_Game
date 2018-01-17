@@ -52,7 +52,7 @@ public class MainGame implements Screen {
         this.camera = new OrthographicCamera(WIDTH, HEIGHT);
         this.view = new ExtendViewport(WIDTH, HEIGHT, camera);
         // move the camera to the center
-        this.camera.position.set(WIDTH / 2, HEIGHT / 2, 0);
+        this.camera.position.set(WIDTH / 2, HEIGHT / 2 - 100, 0);
         
         this.offsetX = 0;
         this.offsetY = 0;
@@ -76,6 +76,11 @@ public class MainGame implements Screen {
         for (Rectangle block : world.getLevels().get(world.getCurrentLevel()).getBlocks()) {
             p1.fixCollision(block);
         }
+        
+        for (Rectangle plat : world.getLevels().get(world.getCurrentLevel()).getKillPlats()) {
+            p1.collisionKillPlat(plat);
+        }
+        
 
         // get the SpriteBatch from the Game
         SpriteBatch batch = game.getBatch();
