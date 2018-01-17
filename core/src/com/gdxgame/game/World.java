@@ -28,7 +28,7 @@ public class World {
 
     public World() {
         // set the current level to the first
-        currentLevel = 2;
+        currentLevel = 0;
         // initializes the levels array
         this.levels = new Array();
 

@@ -39,6 +39,7 @@ public class Player {
     private final float MAX_DX = 13.0f;
     // jumped boolean
     private boolean jumped = false;
+    private boolean holdingUp = false;
     private boolean cameraReset;
     // spawn coordinates
     private final float START_X, START_Y;
@@ -115,11 +116,16 @@ public class Player {
             dx = (int) (dx * decayX);
             this.elapsed = 0;
         }
+        
+        if((Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)
+                || Gdx.input.isKeyPressed(Input.Keys.SPACE))){
+            holdingUp = true;
+        } else {
+            holdingUp = false;
+        }
 
         // if jumping (up arrow, W or space)
-        if ((Gdx.input.isKeyJustPressed(Input.Keys.UP) || Gdx.input.isKeyJustPressed(Input.Keys.W)
-                || Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
-                && !jumped) {
+        if (!jumped && holdingUp) {
             this.dy = 31;
             jumped = true;
         }
@@ -213,7 +219,8 @@ public class Player {
             this.y = world.getLevels().get(world.getCurrentLevel()).getSpawnY();
 
             this.cameraReset = true;
-
+            this.jumped = true;
+            
             // update the collision box to match the player
             bounds.setX(this.x);
             bounds.setY(this.y);

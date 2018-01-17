@@ -19,23 +19,27 @@ public class Level3 extends Level{
     private final float SPAWN_X, SPAWN_Y;
 
     public Level3() {
-        blocks = new Rectangle[5];
-        portal = new Rectangle(2650, 40, 25, 25);
-        killPlats = new Rectangle[1];
+        blocks = new Rectangle[8];
+        portal = new Rectangle(1925, -285, 25, 25);
+        killPlats = new Rectangle[2];
         
         this.SPAWN_X = 100;
-        this.SPAWN_Y = 500;
+        this.SPAWN_Y = 400;
         
         // level's bounds
         blocks[0] = new Rectangle(-20, 300, 20, 500);
-        blocks[1] = new Rectangle(2700, 0, 20, 500);
+        blocks[1] = new Rectangle(1975, -480, 20, 700);
         // level's blocks
         blocks[2] = new Rectangle(0, 300, 400, 20);
-        blocks[3] = new Rectangle(800, -500, 20, 820);
-        blocks[4] = new Rectangle(820, -500, 1000, 20);
+        blocks[3] = new Rectangle(700, -480, 20, 780);
+        blocks[4] = new Rectangle(900, -200, 20, 774);
+        blocks[5] = new Rectangle(825, 0, 75, 20);
+        blocks[6] = new Rectangle(1050, -325, 200, 20);
+        blocks[7] = new Rectangle(1775, -325, 200, 20);
         
         // kil plts
-        killPlats[0] = new Rectangle(400, 300, 400, 21);
+        killPlats[0] = new Rectangle(400, 300, 320, 21);
+        killPlats[1] = new Rectangle(720, -480, 1255, 20);
     }
 
     /**
