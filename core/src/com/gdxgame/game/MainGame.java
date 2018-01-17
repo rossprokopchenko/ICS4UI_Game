@@ -33,11 +33,15 @@ public class MainGame implements Screen {
     private float offsetX, offsetY;
     // game units
     private final int WIDTH = 800, HEIGHT = 600;
-    private final int START_X = 100, START_Y = 100;
+    private final float START_X, START_Y;
 
     public MainGame(ICS4UIgame game) {
         this.game = game;
         this.world = new World();
+        
+        this.START_X = world.getLevels().get(world.getCurrentLevel()).getSpawnX();
+        this.START_Y = world.getLevels().get(world.getCurrentLevel()).getSpawnY();
+        
         this.p1 = new Player(START_X, START_Y, world);
 
         // initialize the spritebatch
@@ -72,6 +76,11 @@ public class MainGame implements Screen {
         for (Rectangle block : world.getLevels().get(world.getCurrentLevel()).getBlocks()) {
             p1.fixCollision(block);
         }
+        
+        for (Rectangle plat : world.getLevels().get(world.getCurrentLevel()).getKillPlats()) {
+            p1.collisionKillPlat(plat);
+        }
+        
 
         // get the SpriteBatch from the Game
         SpriteBatch batch = game.getBatch();
@@ -85,20 +94,24 @@ public class MainGame implements Screen {
         
         // CAMERA
         
-        float levelSizeX = world.getLevels().get(world.getCurrentLevel()).getBlock(world.getLevels().get(world.getCurrentLevel()).getNumBlocks() - 1).x +
-                world.getLevels().get(world.getCurrentLevel()).getBlock(world.getLevels().get(world.getCurrentLevel()).getNumBlocks() - 1).width;
+        float levelSizeX = world.getLevels().get(world.getCurrentLevel()).getHighestX();
+        
+        float lowestY = world.getLevels().get(world.getCurrentLevel()).getLowestY();
+        float highestY = world.getLevels().get(world.getCurrentLevel()).getHighestY();
         
         if(p1.getX() > WIDTH / 2 && p1.getX() + WIDTH / 2 < levelSizeX){
-            offsetX = p1.getX() - WIDTH / 2;
             camera.position.x = p1.getX();
         }
         
-            
+  
+        
+        if(p1.getY() < highestY - 100 && p1.getY() > lowestY){
+            camera.position.y = p1.getY();
+        }
         
         
         if(p1.getCameraReset()){
             this.camera.position.set(WIDTH / 2, HEIGHT / 2 - 100, 0);
-            this.offsetX = 0;
             p1.setCameraReset(false);
         }
         

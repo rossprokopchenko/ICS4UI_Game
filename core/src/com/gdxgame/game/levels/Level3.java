@@ -1,3 +1,7 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.gdxgame.game.levels;
 
 import com.badlogic.gdx.math.Rectangle;
@@ -6,36 +10,32 @@ import com.badlogic.gdx.math.Rectangle;
  *
  * @author prokr8056
  */
-public class Level2 extends Level {
-
+public class Level3 extends Level{
+    
     private Rectangle[] blocks;
     
-    // array of kill platforms of the level
     private Rectangle[] killPlats;
-    
     private Rectangle portal;
     private final float SPAWN_X, SPAWN_Y;
 
-    public Level2() {
-        blocks = new Rectangle[6];
-        // initializes kill platforms
-        killPlats = new Rectangle[1];
+    public Level3() {
+        blocks = new Rectangle[5];
         portal = new Rectangle(2650, 40, 25, 25);
-
+        killPlats = new Rectangle[1];
+        
         this.SPAWN_X = 100;
-        this.SPAWN_Y = 100;
+        this.SPAWN_Y = 500;
         
         // level's bounds
-        blocks[0] = new Rectangle(-20, 0, 20, 500);
+        blocks[0] = new Rectangle(-20, 300, 20, 500);
         blocks[1] = new Rectangle(2700, 0, 20, 500);
         // level's blocks
-        blocks[2] = new Rectangle(0, 0, 400, 20);
-        blocks[3] = new Rectangle(900, 0, 200, 20);
-        blocks[4] = new Rectangle(1600, 0, 200, 20);
-        blocks[5] = new Rectangle(2300, 0, 400, 20);
+        blocks[2] = new Rectangle(0, 300, 400, 20);
+        blocks[3] = new Rectangle(800, -500, 20, 820);
+        blocks[4] = new Rectangle(820, -500, 1000, 20);
         
-        // level's kill platforms
-        killPlats[0] = new Rectangle(0, -150, 2700, 20);
+        // kil plts
+        killPlats[0] = new Rectangle(400, 300, 400, 21);
     }
 
     /**
@@ -91,13 +91,13 @@ public class Level2 extends Level {
     public float getSpawnY() {
         return SPAWN_Y;
     }
-
+    
     @Override
     public float getHighestX() {
         float x = 0;
         
         for (int i = 2; i < blocks.length; i++) {
-            if(x < blocks[i].x){
+            if(x < blocks[i].x + blocks[i].width){
                 x = blocks[i].x + blocks[i].width;
             }
         }

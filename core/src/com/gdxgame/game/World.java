@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import com.gdxgame.game.levels.Level;
 import com.gdxgame.game.levels.Level1;
 import com.gdxgame.game.levels.Level2;
+import com.gdxgame.game.levels.Level3;
 
 /**
  *
@@ -27,17 +28,20 @@ public class World {
 
     public World() {
         // set the current level to the first
-        currentLevel = 0;
+        currentLevel = 2;
         // initializes the levels array
         this.levels = new Array();
+
+
 
         // adds all levels created to the array
         this.levels.add(new Level1());
         this.levels.add(new Level2());
+        this.levels.add(new Level3());
 
         // initializes the shape renderer
         this.shape = new ShapeRenderer();
-        
+
         // get the portal Rectangle of the current level
         portal = levels.get(this.currentLevel).getPortal();
 
@@ -45,16 +49,22 @@ public class World {
 
     public void render(OrthographicCamera camera) {
         // BLOCKS
-        
+
         // render the shapes according to the camera
         shape.setProjectionMatrix(camera.combined);
-        // set the color of shapes
-        shape.setColor(Color.CHARTREUSE);
+
         // set the shape type
         shape.begin(ShapeRenderer.ShapeType.Line);
 
         // renders all shapes of the level
-        for (int i = 0; i < levels.get(this.currentLevel).getNumBlocks(); i++) {            
+        for (int i = 0; i < levels.get(this.currentLevel).getNumBlocks(); i++) {
+            // set the color of shapes
+            if (i > 1) {
+                shape.setColor(Color.CHARTREUSE);
+            } else {
+                shape.setColor(Color.BLACK);
+            }
+
             float x = levels.get(this.currentLevel).getBlock(i).x;
             float y = levels.get(this.currentLevel).getBlock(i).y;
             float width = levels.get(this.currentLevel).getBlock(i).width;
@@ -64,15 +74,32 @@ public class World {
 
         }
         
+        // kill platforms
+        for (int i = 0; i < levels.get(this.currentLevel).getNumKillPlats(); i++) {
+            shape.setColor(Color.RED);
+            
+            float x = levels.get(this.currentLevel).getKillPlat(i).x;
+            float y = levels.get(this.currentLevel).getKillPlat(i).y;
+            float width = levels.get(this.currentLevel).getKillPlat(i).width;
+            float height = levels.get(this.currentLevel).getKillPlat(i).height;
+            
+            shape.rect(x, y, width, height);
+        }
+        
+
         // PORTAL
         // sets the color of the portal
         shape.setColor(Color.RED);
         // draws the portal
         shape.rect(portal.x, portal.y, portal.width, portal.height);
-        
+
+
+        shape.setColor(Color.BLACK);
+
+
         // get the portal Rectangle of the current level
         portal = levels.get(this.currentLevel).getPortal();
-      
+
         // end drawing shapes
         shape.end();
     }
@@ -97,8 +124,7 @@ public class World {
         this.currentLevel = currentLevel;
     }
 
-    
-    public Rectangle getPortal(){
+    public Rectangle getPortal() {
         return portal;
     }
 }
