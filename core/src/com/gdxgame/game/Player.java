@@ -212,8 +212,8 @@ public class Player {
         }
     }
 
-    public void collisionKillPlat(Rectangle plat) {
-        if (bounds.overlaps(plat)) {
+    public void collisionRect(Rectangle rect) {
+        if (bounds.overlaps(rect)) {
             // teleport the player to the start position of the level
             this.x = world.getLevels().get(world.getCurrentLevel()).getSpawnX();
             this.y = world.getLevels().get(world.getCurrentLevel()).getSpawnY();
@@ -224,6 +224,12 @@ public class Player {
             // update the collision box to match the player
             bounds.setX(this.x);
             bounds.setY(this.y);
+        }
+    }
+    
+    public void collisionJumpBoost(Rectangle rect){
+        if (bounds.overlaps(rect) && !holdingUp){
+            this.jumped = false;
         }
     }
 
