@@ -78,7 +78,11 @@ public class MainGame implements Screen {
         }
         
         for (Rectangle plat : world.getLevels().get(world.getCurrentLevel()).getKillPlats()) {
-            p1.collisionKillPlat(plat);
+            p1.collisionRect(plat);
+        }
+        
+        for (Rectangle jumpBoost : world.getLevels().get(world.getCurrentLevel()).getJumpBoosts()) {
+            p1.collisionJumpBoost(jumpBoost);
         }
         
 
