@@ -103,7 +103,7 @@ public class World {
 
         // PORTAL
         // sets the color of the portal
-        shape.setColor(Color.RED);
+        shape.setColor(Color.SKY);
         // draws the portal
         shape.rect(portal.x, portal.y, portal.width, portal.height);
 
