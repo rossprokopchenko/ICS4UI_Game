@@ -9,11 +9,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class ICS4UIgame extends Game {
 	private SpriteBatch batch;
+        private SpriteBatch batch2;
         
 	
 	@Override
 	public void create () {
             batch = new SpriteBatch();
+            batch2 = new SpriteBatch();
             // create the main game screen
             MainGame game = new MainGame(this);
             // set the screen to show it
@@ -32,6 +34,10 @@ public class ICS4UIgame extends Game {
         
         public SpriteBatch getBatch(){
             return batch;
+        }
+        
+        public SpriteBatch getBatch2(){
+            return batch2;
         }
         
 }

@@ -27,6 +27,8 @@ public class MainGame implements Screen {
     // sprite batch
     private SpriteBatch batch;
     private ShapeRenderer shape;
+    // portal batch
+    private SpriteBatch batch2;
     // camera and viewport
     private OrthographicCamera camera;
     private Viewport view;
@@ -47,6 +49,8 @@ public class MainGame implements Screen {
         // initialize the spritebatch
         this.batch = game.getBatch();
         this.shape = p1.getShape();
+        
+        this.batch2 = game.getBatch2();
 
         // set up the camera and view
         this.camera = new OrthographicCamera(WIDTH, HEIGHT);
@@ -84,6 +88,10 @@ public class MainGame implements Screen {
 
         // get the SpriteBatch from the Game
         SpriteBatch batch = game.getBatch();
+        
+        SpriteBatch batch2 = game.getBatch();
+        
+       
 
         //draw the player
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -124,6 +132,12 @@ public class MainGame implements Screen {
         p1.render(shape, camera);
 
         batch.end();
+        
+        batch2.begin();
+        
+        world.render(batch2);
+        
+        batch2.end();
     }
 
     @Override

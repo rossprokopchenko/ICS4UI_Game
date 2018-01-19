@@ -2,6 +2,10 @@ package com.gdxgame.game;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -10,6 +14,7 @@ import com.gdxgame.game.levels.Level;
 import com.gdxgame.game.levels.Level1;
 import com.gdxgame.game.levels.Level2;
 import com.gdxgame.game.levels.Level3;
+import com.gdxgame.game.levels.Menu;
 
 /**
  *
@@ -25,6 +30,14 @@ public class World {
     private Array<Level> levels;
     // current level number
     private int currentLevel;
+    
+    private Animation<TextureRegion> run;
+    
+    private TextureAtlas atlas;
+    
+    private float elapsed;
+
+    
 
     public World() {
         // set the current level to the first
@@ -35,10 +48,18 @@ public class World {
 
 
         // adds all levels created to the array
+        this.levels.add(new Menu());
         this.levels.add(new Level1());
         this.levels.add(new Level2());
         this.levels.add(new Level3());
 
+        
+        run = new Animation(1f / 10f, atlas.findRegions("frame"));
+        
+        portal = levels.get(this.currentLevel).getPortal();
+
+        
+        
         // initializes the shape renderer
         this.shape = new ShapeRenderer();
 
@@ -104,6 +125,14 @@ public class World {
         shape.end();
     }
 
+    public void render(SpriteBatch batch){
+        batch.draw(run.getKeyFrame(this.elapsed), portal.x, portal.y);
+    }
+    
+    public void update(float deltaTime){
+        this.elapsed = deltaTime + this.elapsed;
+    }
+    
     public Rectangle[] getBlocks(int i) {
         return levels.get(i).getBlocks();
     }
