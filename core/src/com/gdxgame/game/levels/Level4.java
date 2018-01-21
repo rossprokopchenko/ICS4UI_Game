@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 /**
  *
- * @author prokr8056
+ * @author bonsk5852
  */
 public class Level4 extends Level {
 
@@ -21,26 +21,26 @@ public class Level4 extends Level {
 
     public Level4() {
         // initializes blocks
-        blocks = new Rectangle[20];
+        blocks = new Rectangle[19];
         // initializes kill platforms
-        killPlats = new Rectangle[9];
+        killPlats = new Rectangle[10];
         // initializes the portal
-        portal = new Rectangle(1420, 825, 25, 25);
+        portal = new Rectangle(1320, 925, 25, 25);
         // jump boost array
-        jumpBoost = new Rectangle[0];
+        jumpBoost = new Rectangle[1];
         // spawn coordinates of the level
         this.SPAWN_X = -20;
         this.SPAWN_Y = 430;
         // Level bounds
         blocks[0] = new Rectangle(-40, 420, 20, 400);
-        blocks[1] = new Rectangle(1400, 800, 20, 400);
+        blocks[1] = new Rectangle(1300, 900, 20, 400);
         // level's blocks
         blocks[2] = new Rectangle(-20, 400, 400, 20);
         blocks[3] = new Rectangle(790, -50, 40, 20);
         blocks[4] = new Rectangle(990, 0, 40, 20);
         blocks[5] = new Rectangle(1190, 50, 40, 20);
         blocks[6] = new Rectangle(1400, 100, 400, 20);
-        blocks[7] = new Rectangle(2000, 400, 20, 200);
+        blocks[7] = new Rectangle(2000, 420, 20, 190);
         blocks[8] = new Rectangle(1990, 200, 40, 20);
         blocks[9] = new Rectangle(2100, 150, 20, 20);
         blocks[10] = new Rectangle(2200, 100, 20, 20);
@@ -51,8 +51,7 @@ public class Level4 extends Level {
         blocks[15] = new Rectangle(2320, 200, 20, 20);
         blocks[16] = new Rectangle(2580, 400, 20, 20);
         blocks[17] = new Rectangle(2320, 620, 20, 20);
-        blocks[18] = new Rectangle(1800, 800, 20, 20);
-        blocks[19] = new Rectangle(1420, 800, 200, 20);
+        blocks[18] = new Rectangle(1320, 900, 200, 20);
 
         // Kill platforms
         killPlats[0] = new Rectangle(380, -70, 20, 490);
@@ -62,12 +61,12 @@ public class Level4 extends Level {
         killPlats[4] = new Rectangle(1780, 0, 620, 20);
         killPlats[5] = new Rectangle(2500, 0, 100, 20);
         killPlats[6] = new Rectangle(2600, 800, 20, 300);
-        killPlats[7] = new Rectangle(1420, 800, 580, 20);
-        killPlats[8] = new Rectangle(1620, 800, 180, 20);
-        
-        // Jump Boost
-        jumpBoost[0] = new Rectangle(0,0,20,20);
+        killPlats[7] = new Rectangle(1500, 580, 20, 320);
+        killPlats[8] = new Rectangle(1520, 580, 480, 20);
+        killPlats[9] = new Rectangle(2000, 400, 300, 20);
 
+        // Jump boosts
+        jumpBoost[0] = new Rectangle(1720, 750, 20, 20);
     }
 
     /**
@@ -97,21 +96,6 @@ public class Level4 extends Level {
     }
 
     @Override
-    public Rectangle getPortal() {
-        return portal;
-    }
-
-    @Override
-    public float getSpawnX() {
-        return SPAWN_X;
-    }
-
-    @Override
-    public float getSpawnY() {
-        return SPAWN_Y;
-    }
-
-    @Override
     public Rectangle[] getKillPlats() {
         return killPlats;
     }
@@ -127,14 +111,45 @@ public class Level4 extends Level {
     }
 
     @Override
+    public Rectangle[] getJumpBoosts() {
+        return jumpBoost;
+    }
+
+    @Override
+    public Rectangle getJumpBoost(int i) {
+        return jumpBoost[i];
+    }
+
+    @Override
+    public int getNumJumpBoosts() {
+        return jumpBoost.length;
+    }
+
+    @Override
+    public Rectangle getPortal() {
+        return portal;
+    }
+
+    @Override
+    public float getSpawnX() {
+        return SPAWN_X;
+    }
+
+    @Override
+    public float getSpawnY() {
+        return SPAWN_Y;
+    }
+
+    @Override
     public float getHighestX() {
         float x = 0;
 
         for (int i = 2; i < blocks.length; i++) {
-            if (x < blocks[i].x) {
+            if (x < blocks[i].x + blocks[i].width) {
                 x = blocks[i].x + blocks[i].width;
             }
         }
+
         return x;
     }
 
@@ -144,7 +159,6 @@ public class Level4 extends Level {
 
         for (int i = 2; i < blocks.length; i++) {
             if (y < blocks[i].y) {
-
             } else {
                 y = blocks[i].y - blocks[i].height;
             }
@@ -164,20 +178,5 @@ public class Level4 extends Level {
         }
 
         return y;
-    }
-
-    @Override
-    public Rectangle[] getJumpBoosts() {
-        return jumpBoost;
-    }
-
-    @Override
-    public Rectangle getJumpBoost(int i) {
-        return jumpBoost[i];
-    }
-
-    @Override
-    public int getNumJumpBoosts() {
-        return jumpBoost.length;
     }
 }
