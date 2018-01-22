@@ -143,12 +143,14 @@ public class Player {
         if (dy > -MAX_DY) {
             this.dy -= gravity;
         }
+        
+        
 
         // update X and Y coordinates according to the velocity
         this.x = this.x + this.dx;
         this.y = this.y + this.dy;
 
-//         System.out.println("dx: " + dx + "  dy: " + dy);
+         System.out.println("x: " + x + "  y: " + y);
         // update collision rectangle
         this.bounds.setX(this.x);
         this.bounds.setY(this.y);
