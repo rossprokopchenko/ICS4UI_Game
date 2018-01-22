@@ -2,9 +2,11 @@ package com.gdxgame.game;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
+import com.gdxgame.game.levels.EndScreen;
 
 import com.gdxgame.game.levels.Level;
 import com.gdxgame.game.levels.Level1;
@@ -33,13 +35,13 @@ public class World {
         currentLevel = 0;
         // initializes the levels array
         this.levels = new Array();
-
         // adds all levels created to the array
         this.levels.add(new Level1());
         this.levels.add(new Level2());
         this.levels.add(new Level3());
         this.levels.add(new Level4());
         this.levels.add(new Level5());
+        this.levels.add(new EndScreen());
 
         // initializes the shape renderer
         this.shape = new ShapeRenderer();
@@ -54,7 +56,7 @@ public class World {
 
         // render the shapes according to the camera
         shape.setProjectionMatrix(camera.combined);
-// set the shape type
+        // set the shape type
         shape.begin(ShapeRenderer.ShapeType.Line);
 
         // renders all shapes of the level

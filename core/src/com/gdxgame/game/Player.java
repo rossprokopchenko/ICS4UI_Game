@@ -57,6 +57,8 @@ public class Player {
     private World world;
     // rectangle bounds of the player
     private Rectangle bounds;
+    // death counter
+    private int deaths;
 
     public Player(float x, float y, World world) {
         this.START_X = x;
@@ -116,9 +118,9 @@ public class Player {
             dx = (int) (dx * decayX);
             this.elapsed = 0;
         }
-        
-        if((Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)
-                || Gdx.input.isKeyPressed(Input.Keys.SPACE))){
+
+        if ((Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)
+                || Gdx.input.isKeyPressed(Input.Keys.SPACE))) {
             holdingUp = true;
         } else {
             holdingUp = false;
@@ -209,6 +211,18 @@ public class Player {
             // update the collision box to match the player
             bounds.setX(this.x);
             bounds.setY(this.y);
+        } else if (bounds.overlaps(world.getPortal()) && world.getCurrentLevel() >= world.getNumLevels() - 1) {
+            // Set the current level to the first levelF
+            world.setCurrentLevel(0);
+            // teleport the player to the start position of the level
+            this.x = world.getLevels().get(world.getCurrentLevel()).getSpawnX();
+            this.y = world.getLevels().get(world.getCurrentLevel()).getSpawnY();
+
+            this.cameraReset = true;
+
+            // update the collision box to match the player
+            bounds.setX(this.x);
+            bounds.setY(this.y);
         }
     }
 
@@ -220,20 +234,23 @@ public class Player {
 
             this.cameraReset = true;
             this.jumped = true;
-            
+
             // update the collision box to match the player
             bounds.setX(this.x);
             bounds.setY(this.y);
+            deaths++;
+            System.out.println(deaths);
         }
     }
-    
-    public void collisionJumpBoost(Rectangle rect){
-        if (bounds.overlaps(rect) && !holdingUp){
+
+    public void collisionJumpBoost(Rectangle rect) {
+        if (bounds.overlaps(rect) && !holdingUp) {
             this.jumped = false;
         }
     }
 
     public void render(SpriteBatch batch) {
+
         // standing
         if (this.dx == 0) {
             batch.draw(stand, x, y);
