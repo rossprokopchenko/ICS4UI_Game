@@ -10,6 +10,7 @@ import com.gdxgame.game.levels.Level;
 import com.gdxgame.game.levels.Level1;
 import com.gdxgame.game.levels.Level2;
 import com.gdxgame.game.levels.Level3;
+import com.gdxgame.game.levels.Level4;
 import com.gdxgame.game.levels.Level5;
 
 /**
@@ -29,7 +30,7 @@ public class World {
 
     public World() {
         // set the current level to the first
-        currentLevel = 3;
+        currentLevel = 0;
         // initializes the levels array
         this.levels = new Array();
 
@@ -37,6 +38,7 @@ public class World {
         this.levels.add(new Level1());
         this.levels.add(new Level2());
         this.levels.add(new Level3());
+        this.levels.add(new Level4());
         this.levels.add(new Level5());
 
         // initializes the shape renderer
@@ -54,7 +56,6 @@ public class World {
         shape.setProjectionMatrix(camera.combined);
 // set the shape type
         shape.begin(ShapeRenderer.ShapeType.Line);
-
 
         // renders all shapes of the level
         for (int i = 0; i < levels.get(this.currentLevel).getNumBlocks(); i++) {
@@ -100,16 +101,13 @@ public class World {
             shape.rect(x, y, width, height);
         }
 
-
         // PORTAL
         // sets the color of the portal
         shape.setColor(Color.SKY);
         // draws the portal
         shape.rect(portal.x, portal.y, portal.width, portal.height);
 
-
         shape.setColor(Color.BLACK);
-
 
         // get the portal Rectangle of the current level
         portal = levels.get(this.currentLevel).getPortal();
