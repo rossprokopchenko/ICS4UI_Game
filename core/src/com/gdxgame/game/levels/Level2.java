@@ -13,6 +13,8 @@ public class Level2 extends Level {
     // array of kill platforms of the level
     private Rectangle[] killPlats;
     
+    private Rectangle[] jumpBoost;
+    
     private Rectangle portal;
     private final float SPAWN_X, SPAWN_Y;
 
@@ -20,6 +22,9 @@ public class Level2 extends Level {
         blocks = new Rectangle[6];
         // initializes kill platforms
         killPlats = new Rectangle[1];
+        
+        jumpBoost = new Rectangle[0];
+        
         portal = new Rectangle(2650, 40, 25, 25);
 
         this.SPAWN_X = 100;
@@ -75,6 +80,21 @@ public class Level2 extends Level {
     @Override
     public int getNumKillPlats() {
         return killPlats.length;
+    }
+    
+    @Override
+    public Rectangle[] getJumpBoosts() {
+        return jumpBoost;
+    }
+
+    @Override
+    public Rectangle getJumpBoost(int i) {
+        return jumpBoost[i];
+    }
+
+    @Override
+    public int getNumJumpBoosts() {
+        return jumpBoost.length;
     }
 
     @Override
