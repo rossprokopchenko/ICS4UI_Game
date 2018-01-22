@@ -21,8 +21,8 @@ public class Level5 extends Level {
     public Level5() {
         blocks = new Rectangle[8];
         portal = new Rectangle(400, -2650, 25, 25);
-        killPlats = new Rectangle[19];
-        jumpBoost = new Rectangle[3];
+        killPlats = new Rectangle[21];
+        jumpBoost = new Rectangle[4];
 
         this.SPAWN_X = 400;
         this.SPAWN_Y = 400;
@@ -46,19 +46,22 @@ public class Level5 extends Level {
         killPlats[7] = new Rectangle(305, -1650, 20, 300);
         killPlats[8] = new Rectangle(495, -1650, 20, 300);
         killPlats[9] = new Rectangle(325, -1650, 170, 20);
-        killPlats[10] = new Rectangle(305, -2150, 20, 300);
-        killPlats[11] = new Rectangle(495, -2150, 20, 300);
-        killPlats[12] = new Rectangle(20, -1950, 285, 20);
-        killPlats[13] = new Rectangle(515, -1950, 285, 20);
-        killPlats[14] = new Rectangle(305, -1850, 80, 20);
-        killPlats[15] = new Rectangle(445, -2150, 50, 20);
-        killPlats[16] = new Rectangle(325, -2680, 20, 100);
-        killPlats[17] = new Rectangle(475, -2680, 20, 100);
-        killPlats[18] = new Rectangle(20, -2700, 780, 20);
+        killPlats[10] = new Rectangle(20, -1150, 285, 20); //
+        killPlats[11] = new Rectangle(515, -1150, 285, 20); //
+        killPlats[12] = new Rectangle(305, -2150, 20, 300);
+        killPlats[13] = new Rectangle(495, -2150, 20, 300);
+        killPlats[14] = new Rectangle(20, -1950, 285, 20);
+        killPlats[15] = new Rectangle(515, -1950, 285, 20);
+        killPlats[16] = new Rectangle(305, -1850, 80, 20);
+        killPlats[17] = new Rectangle(445, -2150, 50, 20);
+        killPlats[18] = new Rectangle(325, -2680, 20, 100);
+        killPlats[19] = new Rectangle(475, -2680, 20, 100);
+        killPlats[20] = new Rectangle(20, -2700, 780, 20);
 
         jumpBoost[0] = new Rectangle(400, -150, 25, 25);
         jumpBoost[1] = new Rectangle(400, -1000, 25, 25);
-        jumpBoost[2] = new Rectangle(620, -1900, 25, 25);
+        jumpBoost[2] = new Rectangle(150, -1900, 25, 25);
+        jumpBoost[3] = new Rectangle(620, -1900, 25, 25);
     }
 
     /**

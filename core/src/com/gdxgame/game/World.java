@@ -30,7 +30,7 @@ public class World {
 
     public World() {
         // set the current level to the first
-        currentLevel = 0;
+        currentLevel = 4;
         // initializes the levels array
         this.levels = new Array();
 
