@@ -7,8 +7,10 @@ package com.gdxgame.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -38,10 +40,10 @@ public class MainGame implements Screen {
     public MainGame(ICS4UIgame game) {
         this.game = game;
         this.world = new World();
-        
+
         this.START_X = world.getLevels().get(world.getCurrentLevel()).getSpawnX();
         this.START_Y = world.getLevels().get(world.getCurrentLevel()).getSpawnY();
-        
+
         this.p1 = new Player(START_X, START_Y, world);
 
         // initialize the spritebatch
@@ -53,7 +55,7 @@ public class MainGame implements Screen {
         this.view = new ExtendViewport(WIDTH, HEIGHT, camera);
         // move the camera to the center
         this.camera.position.set(WIDTH / 2, HEIGHT / 2 - 100, 0);
-        
+
         this.offsetX = 0;
         this.offsetY = 0;
 
@@ -69,22 +71,20 @@ public class MainGame implements Screen {
 
     @Override
     public void render(float deltaTime) {
-        
         // update the player
         p1.update(deltaTime);
 
         for (Rectangle block : world.getLevels().get(world.getCurrentLevel()).getBlocks()) {
             p1.fixCollision(block);
         }
-        
+
         for (Rectangle plat : world.getLevels().get(world.getCurrentLevel()).getKillPlats()) {
             p1.collisionRect(plat);
         }
-        
+
         for (Rectangle jumpBoost : world.getLevels().get(world.getCurrentLevel()).getJumpBoosts()) {
             p1.collisionJumpBoost(jumpBoost);
         }
-        
 
         // get the SpriteBatch from the Game
         SpriteBatch batch = game.getBatch();
@@ -95,30 +95,26 @@ public class MainGame implements Screen {
 
         // render the world
         world.render(camera);
-        
+
         // CAMERA
-        
         float levelSizeX = world.getLevels().get(world.getCurrentLevel()).getHighestX();
-        
+
         float lowestY = world.getLevels().get(world.getCurrentLevel()).getLowestY();
         float highestY = world.getLevels().get(world.getCurrentLevel()).getHighestY();
-        
-        if(p1.getX() > WIDTH / 2 && p1.getX() + WIDTH / 2 < levelSizeX){
+
+        if (p1.getX() > WIDTH / 2 && p1.getX() + WIDTH / 2 < levelSizeX) {
             camera.position.x = p1.getX();
         }
-        
-  
-        
-        if(p1.getY() < highestY - 100 && p1.getY() > lowestY){
+
+        if (p1.getY() < highestY - 100 && p1.getY() > lowestY) {
             camera.position.y = p1.getY();
         }
-        
-        
-        if(p1.getCameraReset()){
+
+        if (p1.getCameraReset()) {
             this.camera.position.set(WIDTH / 2, HEIGHT / 2 - 100, 0);
             p1.setCameraReset(false);
         }
-        
+
         camera.update();
         batch.setProjectionMatrix(camera.combined);
 
