@@ -33,6 +33,7 @@ public class MainGame implements Screen {
     private OrthographicCamera camera;
     private Viewport view;
     private float offsetX, offsetY;
+    
     // game units
     private final int WIDTH = 800, HEIGHT = 600;
     private final float START_X, START_Y;
@@ -114,6 +115,11 @@ public class MainGame implements Screen {
             this.camera.position.set(WIDTH / 2, HEIGHT / 2 - 100, 0);
             p1.setCameraReset(false);
         }
+        
+        // FONT
+        
+        font.setColor(Color.WHITE);
+        font.draw(game.getBatch(), str, 10, 10);
 
         camera.update();
         batch.setProjectionMatrix(camera.combined);

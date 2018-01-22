@@ -141,18 +141,30 @@ public class Player {
             this.cameraReset = true;
         }
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+
+            if (world.getCurrentLevel() < world.getNumLevels() - 1) {
+                world.setCurrentLevel(world.getCurrentLevel() + 1);
+
+                // teleport the player to the start position of the level
+                this.x = world.getLevels().get(world.getCurrentLevel()).getSpawnX();
+                this.y = world.getLevels().get(world.getCurrentLevel()).getSpawnY();
+
+                this.cameraReset = true;
+            }
+        }
+
         // gravity
         if (dy > -MAX_DY) {
             this.dy -= gravity;
         }
-        
-        
 
         // update X and Y coordinates according to the velocity
         this.x = this.x + this.dx;
         this.y = this.y + this.dy;
 
-         System.out.println("x: " + x + "  y: " + y);
+//         System.out.println("x: " + x + "  y: " + y);
+
         // update collision rectangle
         this.bounds.setX(this.x);
         this.bounds.setY(this.y);
