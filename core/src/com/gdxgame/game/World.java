@@ -31,7 +31,7 @@ public class World {
     // current level number
     private int currentLevel;
     
-    private Animation<TextureRegion> run;
+    private Animation<TextureRegion> portalTurn;
     
     private TextureAtlas atlas;
     
@@ -54,12 +54,12 @@ public class World {
         this.levels.add(new Level3());
 
         
-        run = new Animation(1f / 10f, atlas.findRegions("frame"));
         
-        portal = levels.get(this.currentLevel).getPortal();
+        this.atlas = new TextureAtlas("packed/portalPics.atlas");
+        
+        portalTurn = new Animation(1f / 10f, atlas.findRegions("frame"));
+        
 
-        
-        
         // initializes the shape renderer
         this.shape = new ShapeRenderer();
 
@@ -126,7 +126,7 @@ public class World {
     }
 
     public void render(SpriteBatch batch){
-        batch.draw(run.getKeyFrame(this.elapsed), portal.x, portal.y);
+        batch.draw(portalTurn.getKeyFrame(this.elapsed), portal.x, portal.y);
     }
     
     public void update(float deltaTime){
@@ -155,5 +155,9 @@ public class World {
 
     public Rectangle getPortal() {
         return portal;
+    }
+    
+    public void dispose(){
+        atlas.dispose();
     }
 }

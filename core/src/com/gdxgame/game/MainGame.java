@@ -76,6 +76,8 @@ public class MainGame implements Screen {
         
         // update the player
         p1.update(deltaTime);
+        // update the world
+        world.update(deltaTime);
 
         for (Rectangle block : world.getLevels().get(world.getCurrentLevel()).getBlocks()) {
             p1.fixCollision(block);
