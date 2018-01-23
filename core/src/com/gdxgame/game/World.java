@@ -45,7 +45,7 @@ public class World {
 
     public World() {
         // set the current level to the first
-        currentLevel = 4;
+        currentLevel = 1;
         // initializes the levels array
         this.levels = new Array();
         // adds all levels created to the array
@@ -140,11 +140,17 @@ public class World {
     }
 
     public void render(SpriteBatch batch){
-        batch.draw(portalTurn.getKeyFrame(this.elapsed), portal.x, portal.y, 70, 70);
+        batch.draw(portalTurn.getKeyFrame(this.elapsed), portal.x - 20, portal.y - 20, 70, 70);
     }
     
     public void update(float deltaTime){
-        this.elapsed = deltaTime + this.elapsed;
+        
+        
+        if(this.elapsed < 0.8){
+            this.elapsed = deltaTime + this.elapsed;
+        } else {
+            this.elapsed = 0;
+        }
     }
     
     public Rectangle[] getBlocks(int i) {

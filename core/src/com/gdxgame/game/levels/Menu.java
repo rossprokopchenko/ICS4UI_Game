@@ -22,12 +22,21 @@ public class Menu extends Level{
     private Rectangle portal;
     private final float SPAWN_X, SPAWN_Y;
     
+    private Rectangle[] jumpBoost;
+    // array of kill platforms of the level
+    private Rectangle[] killPlats;
+    
     
     public Menu(){
         blocks = new Rectangle[6];
         portal = new Rectangle(2150, 40, 25, 25);
         this.SPAWN_X = 100;
         this.SPAWN_Y = 100;
+        
+        // initializes kill platforms
+        killPlats = new Rectangle[1];
+        
+        jumpBoost = new Rectangle[0];
         
         blocks[0] = new Rectangle(0, 0, 800, 20);
         blocks[1] = new Rectangle(600, 150, 200, 20);
@@ -98,6 +107,21 @@ public class Menu extends Level{
     @Override
     public float getHighestY() {
     return 0;
+    }
+
+    @Override
+    public Rectangle[] getJumpBoosts() {
+        return jumpBoost;
+    }
+
+    @Override
+    public Rectangle getJumpBoost(int i) {
+        return jumpBoost[i];
+    }
+
+    @Override
+    public int getNumJumpBoosts() {
+        return jumpBoost.length;
     }
     
     
