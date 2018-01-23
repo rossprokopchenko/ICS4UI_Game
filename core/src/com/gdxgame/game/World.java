@@ -1,5 +1,6 @@
 package com.gdxgame.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -34,7 +35,7 @@ public class World {
     private Array<Level> levels;
     // current level number
     private int currentLevel;
-    
+   
     private Animation<TextureRegion> portalTurn;
     
     private TextureAtlas atlas;
@@ -45,7 +46,7 @@ public class World {
 
     public World() {
         // set the current level to the first
-        currentLevel = 1;
+        currentLevel = 0;
         // initializes the levels array
         this.levels = new Array();
         // adds all levels created to the array
@@ -69,6 +70,8 @@ public class World {
 
         // get the portal Rectangle of the current level
         portal = levels.get(this.currentLevel).getPortal();
+        
+        
 
     }
 
@@ -79,7 +82,7 @@ public class World {
         shape.setProjectionMatrix(camera.combined);
         // set the shape type
         shape.begin(ShapeRenderer.ShapeType.Line);
-
+        
         // renders all shapes of the level
         for (int i = 0; i < levels.get(this.currentLevel).getNumBlocks(); i++) {
 

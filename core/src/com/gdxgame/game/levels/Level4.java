@@ -66,7 +66,7 @@ public class Level4 extends Level {
         killPlats[9] = new Rectangle(2000, 400, 300, 20);
 
         // Jump boosts
-        jumpBoost[0] = new Rectangle(1720, 750, 20, 20);
+        jumpBoost[0] = new Rectangle(1720, 750, 25, 25);
     }
 
     /**

@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -30,6 +31,7 @@ public class MainGame implements Screen {
     // sprite batch
     public SpriteBatch batch;
     private ShapeRenderer shape;
+    private BitmapFont font;
     // portal batch
     private SpriteBatch batch2;
     // camera and viewport
@@ -54,6 +56,8 @@ public class MainGame implements Screen {
         this.shape = p1.getShape();
         
         this.batch2 = game.getBatch2();
+
+        font = new BitmapFont(Gdx.files.internal("arial.fnt"),Gdx.files.internal("arial_0.png"), false);
 
         // set up the camera and view
         this.camera = new OrthographicCamera(WIDTH, HEIGHT);
@@ -125,13 +129,18 @@ public class MainGame implements Screen {
             p1.setCameraReset(false);
         }
 
+
         camera.update();
+        p1.render(shape, camera);
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
 
+        // FON
         // p1.render(batch);
-        p1.render(shape, camera);
+
+        font.setColor(Color.WHITE);
+        font.draw(batch, "Deaths: " + p1.getDeaths(), camera.position.x - WIDTH / 2 + 50, camera.position.y - 200);
 
         batch.end();
         
