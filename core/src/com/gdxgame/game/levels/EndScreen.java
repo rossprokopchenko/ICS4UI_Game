@@ -1,12 +1,17 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.gdxgame.game.levels;
 
 import com.badlogic.gdx.math.Rectangle;
 
 /**
  *
- * @author prokr8056
+ * @author kwame
  */
-public class Level1 extends Level {
+public class EndScreen extends Level {
 
     // array of blocks of the level
     private Rectangle[] blocks;
@@ -22,31 +27,28 @@ public class Level1 extends Level {
     // spawn coordinates of the level
     private final float SPAWN_X, SPAWN_Y;
 
-    public Level1() {
+    public EndScreen() {
         // initializes blocks
-        blocks = new Rectangle[6];
+        blocks = new Rectangle[5];
         // initializes kill platforms
-        killPlats = new Rectangle[1];
+        killPlats = new Rectangle[0];
         // initializes the portal
-        portal = new Rectangle(2550, 40, 25, 25);
+        portal = new Rectangle(775, 220, 25, 25);
 
         jumpBoost = new Rectangle[0];
 
         // spawn coordinates of the level
-        this.SPAWN_X = 100;
-        this.SPAWN_Y = 100;
+        this.SPAWN_X = 375;
+        this.SPAWN_Y = 20;
 
         // level's bounds
-        blocks[0] = new Rectangle(-20, 0, 20, 500);
-        blocks[1] = new Rectangle(2600, 0, 20, 500);
+        blocks[0] = new Rectangle(-20, 0, 20, 600);
+        blocks[1] = new Rectangle(800, 0, 20, 600);
         // level's blocks
-        blocks[2] = new Rectangle(0, 0, 200, 20);
-        blocks[3] = new Rectangle(600, 0, 400, 20);
-        blocks[4] = new Rectangle(1400, 0, 400, 20);
-        blocks[5] = new Rectangle(2200, 0, 400, 20);
+        blocks[2] = new Rectangle(0, 0, 800, 20);
+        blocks[3] = new Rectangle(0, 200, 100, 20);
+        blocks[4] = new Rectangle(700, 200, 100, 20);
 
-        // level's kill platforms
-        killPlats[0] = new Rectangle(0, -150, 2600, 20);
     }
 
     /**

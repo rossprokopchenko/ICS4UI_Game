@@ -24,6 +24,12 @@ public abstract class Level {
     public abstract Rectangle getKillPlat(int i);
     
     public abstract int getNumKillPlats();
+    
+    public abstract Rectangle[] getJumpBoosts();
+    
+    public abstract Rectangle getJumpBoost(int i);
+    
+    public abstract int getNumJumpBoosts();
 
     public abstract Rectangle getPortal();
 
