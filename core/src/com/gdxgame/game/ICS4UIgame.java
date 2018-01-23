@@ -14,6 +14,7 @@ public class ICS4UIgame extends Game {
 	
 	@Override
 	public void create () {
+            // creating spritebatches for player and for portal
             batch = new SpriteBatch();
             batch2 = new SpriteBatch();
             // create the main game screen

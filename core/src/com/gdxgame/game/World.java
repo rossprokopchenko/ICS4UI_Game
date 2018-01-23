@@ -126,7 +126,7 @@ public class World {
     }
 
     public void render(SpriteBatch batch){
-        batch.draw(portalTurn.getKeyFrame(this.elapsed), portal.x, portal.y);
+        batch.draw(portalTurn.getKeyFrame(this.elapsed), portal.x, portal.y, 70, 70);
     }
     
     public void update(float deltaTime){
