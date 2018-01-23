@@ -52,7 +52,7 @@ public class World {
     }
 
     public void render(OrthographicCamera camera) {
-        // BLOCKS
+// BLOCKS
 
         // render the shapes according to the camera
         shape.setProjectionMatrix(camera.combined);

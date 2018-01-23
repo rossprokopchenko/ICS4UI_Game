@@ -26,8 +26,9 @@ public class MainGame implements Screen {
     private ICS4UIgame game;
     private World world;
     private Player p1;
+
     // sprite batch
-    private SpriteBatch batch;
+    public SpriteBatch batch;
     private ShapeRenderer shape;
     // camera and viewport
     private OrthographicCamera camera;
@@ -95,7 +96,6 @@ public class MainGame implements Screen {
 
         // render the world
         world.render(camera);
-
         // CAMERA
         float levelSizeX = world.getLevels().get(world.getCurrentLevel()).getHighestX();
 
