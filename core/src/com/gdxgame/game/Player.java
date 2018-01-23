@@ -304,4 +304,10 @@ public class Player {
     public void setCameraReset(boolean b) {
         cameraReset = b;
     }
+
+    public int getDeaths() {
+        return deaths;
+    }
+    
+    
 }

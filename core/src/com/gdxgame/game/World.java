@@ -31,9 +31,6 @@ public class World {
     // current level number
     private int currentLevel;
     
-    private BitmapFont font;
-    
-    private CharSequence str = "Hello World!";
 
     public World() {
         // set the current level to the first
