@@ -140,8 +140,10 @@ public class MainGame implements Screen {
         font.draw(batch, "Deaths: " + p1.getDeaths(), camera.position.x - WIDTH / 2 + 50, camera.position.y - 200);
         // Draw the controls on the Menu screen
         if (world.getCurrentLevel() == 0) {
-            font.draw(batch, "Use W,A,S,D or the arrow keys to move.", 145, 500);
-            font.draw(batch, "Use SPACE, W or the UP key to jump.", 155, 450);
+            font.draw(batch, "Use W,A,S,D or the arrow keys to move.", 145, -50);
+            font.draw(batch, "Use SPACE, W or the UP key to jump.", 155, 500);
+            font.draw(batch, "The Golden Block lets you jump again", 150, 450);
+            font.draw(batch, "Avoid the Red Platforms.", 225, -100);
             font.draw(batch, "Start!", 720, 300);
         }
         // Draw instructions on level 4
