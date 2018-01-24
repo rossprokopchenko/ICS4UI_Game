@@ -17,6 +17,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -38,6 +39,12 @@ public class MainGame implements Screen {
     private OrthographicCamera camera;
     private Viewport view;
     private float offsetX, offsetY;
+    
+    private long startTime;
+    private long elapsedTimeNs;
+    private float timer;
+    private long millis;
+    
     // game units
     private final int WIDTH = 800, HEIGHT = 600;
     private final float START_X, START_Y;
@@ -71,6 +78,11 @@ public class MainGame implements Screen {
         this.camera.zoom = 1.25f;
         // make sure to apply the changes
         this.camera.update();
+
+        startTime = System.nanoTime();
+        timer = 0.00f;
+        millis = 0;
+        elapsedTimeNs = System.nanoTime() - startTime;
 
     }
 
@@ -128,12 +140,14 @@ public class MainGame implements Screen {
         }
 
         camera.update();
+
         p1.render(shape, camera);
+
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
 
-        // FON
+        // FONT
         // p1.render(batch);
         font.setColor(Color.WHITE);
         // Draw the death counter on the screen
