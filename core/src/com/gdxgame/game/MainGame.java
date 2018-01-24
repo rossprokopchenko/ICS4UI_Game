@@ -17,6 +17,7 @@ import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -35,6 +36,12 @@ public class MainGame implements Screen {
     private OrthographicCamera camera;
     private Viewport view;
     private float offsetX, offsetY;
+    
+    private long startTime;
+    private long elapsedTimeNs;
+    private float timer;
+    private long millis;
+    
     // game units
     private final int WIDTH = 800, HEIGHT = 600;
     private final float START_X, START_Y;
@@ -52,7 +59,7 @@ public class MainGame implements Screen {
         this.batch = game.getBatch();
         this.shape = p1.getShape();
 
-        font = new BitmapFont(Gdx.files.internal("arial.fnt"),Gdx.files.internal("arial_0.png"), false);
+        font = new BitmapFont(Gdx.files.internal("arial.fnt"), Gdx.files.internal("arial_0.png"), false);
 
         // set up the camera and view
         this.camera = new OrthographicCamera(WIDTH, HEIGHT);
@@ -66,6 +73,11 @@ public class MainGame implements Screen {
         this.camera.zoom = 1.25f;
         // make sure to apply the changes
         this.camera.update();
+
+        startTime = System.nanoTime();
+        timer = 0.00f;
+        millis = 0;
+        elapsedTimeNs = System.nanoTime() - startTime;
 
     }
 
@@ -121,18 +133,27 @@ public class MainGame implements Screen {
 
 
         camera.update();
+
         p1.render(shape, camera);
+
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
 
-        // FON
+        // FONT
         // p1.render(batch);
 
         font.setColor(Color.WHITE);
-        font.draw(batch, "Deaths: " + p1.getDeaths(), camera.position.x - WIDTH / 2 + 50, camera.position.y - 200);
-
+        font.draw(batch, "Deaths: " + p1.getDeaths(), camera.position.x - WIDTH / 2 - 75, camera.position.y - 275);
+        font.draw(batch, "Level: " + (world.getCurrentLevel() + 1), camera.position.x - WIDTH / 2 - 75, camera.position.y - 300);
+        font.setColor(Color.RED);
+        font.draw(batch, "Timer: " + timer / 1000, camera.position.x - WIDTH / 2 - 75, camera.position.y - 250);
+        
         batch.end();
+        
+        millis = elapsedTimeNs / 1000000;
+        timer = millis;
+        elapsedTimeNs = System.nanoTime() - startTime;
     }
 
     @Override
