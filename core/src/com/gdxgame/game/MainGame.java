@@ -32,9 +32,11 @@ public class MainGame implements Screen {
     // sprite batch
     public SpriteBatch batch;
     private ShapeRenderer shape;
-    private BitmapFont font;
-    // portal batch
+    
     private SpriteBatch batch2;
+    
+    private BitmapFont font;
+
     // camera and viewport
     private OrthographicCamera camera;
     private Viewport view;
@@ -60,9 +62,8 @@ public class MainGame implements Screen {
 
         // initialize the spritebatch
         this.batch = game.getBatch();
-        this.shape = p1.getShape();
-
         this.batch2 = game.getBatch2();
+        this.shape = p1.getShape();
 
         font = new BitmapFont(Gdx.files.internal("arial.fnt"), Gdx.files.internal("arial_0.png"), false);
 
@@ -111,7 +112,6 @@ public class MainGame implements Screen {
 
         // get the SpriteBatch from the Game
         SpriteBatch batch = game.getBatch();
-
         SpriteBatch batch2 = game.getBatch();
 
         //draw the player
@@ -120,6 +120,7 @@ public class MainGame implements Screen {
 
         // render the world
         world.render(camera);
+        
         // CAMERA
         float levelSizeX = world.getLevels().get(world.getCurrentLevel()).getHighestX();
 
@@ -146,12 +147,17 @@ public class MainGame implements Screen {
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
+        
+        
 
         // FONT
-        // p1.render(batch);
-        font.setColor(Color.WHITE);
+        font.setColor(Color.RED);
         // Draw the death counter on the screen
-        font.draw(batch, "Deaths: " + p1.getDeaths(), camera.position.x - WIDTH / 2 + 50, camera.position.y - 200);
+        font.draw(batch, "Time: " + timer / 100, camera.position.x - WIDTH / 2 - 50, camera.position.y - 250);
+        font.setColor(Color.WHITE);
+        font.draw(batch, "Deaths: " + p1.getDeaths(), camera.position.x - WIDTH / 2 - 50, camera.position.y - 275);
+        font.draw(batch, "Level: " + world.getCurrentLevel(), camera.position.x - WIDTH / 2 - 50, camera.position.y - 300);
+        
         // Draw the controls on the Menu screen
         if (world.getCurrentLevel() == 0) {
             font.draw(batch, "Use W,A,S,D or the arrow keys to move.", 145, 500);
@@ -162,13 +168,19 @@ public class MainGame implements Screen {
         if (world.getCurrentLevel() == 4) {
             font.draw(batch, "Use the Golden Block to double jump", 1520, 720);
         }
+        
         batch.end();
-
+        
         batch2.begin();
-
+        
         world.render(batch2);
-
+        
         batch2.end();
+        
+        millis = elapsedTimeNs / 10000;
+        timer = TimeUnit.MILLISECONDS.toSeconds(millis);
+        elapsedTimeNs = System.nanoTime() - startTime;
+        
     }
 
     @Override

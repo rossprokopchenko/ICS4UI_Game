@@ -267,7 +267,7 @@ public class Player {
         shape.setProjectionMatrix(camera.combined);
         shape.begin(ShapeRenderer.ShapeType.Filled);
 
-        shape.setColor(Color.RED);
+        shape.setColor(Color.SKY);
         shape.rect(bounds.x, bounds.y, bounds.width, bounds.height);
 
         shape.end();
