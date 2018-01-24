@@ -1,5 +1,6 @@
 package com.gdxgame.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -10,7 +11,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
-import com.gdxgame.game.levels.EndScreen;
 
 import com.gdxgame.game.levels.Level;
 import com.gdxgame.game.levels.Level1;
@@ -34,18 +34,16 @@ public class World {
     private Array<Level> levels;
     // current level number
     private int currentLevel;
-    
-    private Animation<TextureRegion> portalTurn;
-    
-    private TextureAtlas atlas;
-    
-    private float elapsed;
 
-    
+    private Animation<TextureRegion> portalTurn;
+
+    private TextureAtlas atlas;
+
+    private float elapsed;
 
     public World() {
         // set the current level to the first
-        currentLevel = 1;
+        currentLevel = 0;
         // initializes the levels array
         this.levels = new Array();
         // adds all levels created to the array
@@ -54,15 +52,13 @@ public class World {
         this.levels.add(new Level2());
         this.levels.add(new Level3());
 
-        
-        
         this.atlas = new TextureAtlas("packed/portalPics.atlas");
-        
+
         portalTurn = new Animation(1f / 10f, atlas.findRegions("frame"));
-        
+
         this.levels.add(new Level4());
         this.levels.add(new Level5());
-        this.levels.add(new EndScreen());
+        //      this.levels.add(new EndScreen());
 
         // initializes the shape renderer
         this.shape = new ShapeRenderer();
@@ -73,7 +69,7 @@ public class World {
     }
 
     public void render(OrthographicCamera camera) {
-        // BLOCKS
+// BLOCKS
 
         // render the shapes according to the camera
         shape.setProjectionMatrix(camera.combined);
@@ -139,20 +135,19 @@ public class World {
         shape.end();
     }
 
-    public void render(SpriteBatch batch){
+    public void render(SpriteBatch batch) {
         batch.draw(portalTurn.getKeyFrame(this.elapsed), portal.x - 20, portal.y - 20, 70, 70);
     }
-    
-    public void update(float deltaTime){
-        
-        
-        if(this.elapsed < 0.8){
+
+    public void update(float deltaTime) {
+
+        if (this.elapsed < 0.8) {
             this.elapsed = deltaTime + this.elapsed;
         } else {
             this.elapsed = 0;
         }
     }
-    
+
     public Rectangle[] getBlocks(int i) {
         return levels.get(i).getBlocks();
     }
@@ -176,8 +171,8 @@ public class World {
     public Rectangle getPortal() {
         return portal;
     }
-    
-    public void dispose(){
+
+    public void dispose() {
         atlas.dispose();
     }
 }

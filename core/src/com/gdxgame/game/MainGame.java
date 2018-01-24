@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -26,9 +27,11 @@ public class MainGame implements Screen {
     private ICS4UIgame game;
     private World world;
     private Player p1;
+
     // sprite batch
-    private SpriteBatch batch;
+    public SpriteBatch batch;
     private ShapeRenderer shape;
+    private BitmapFont font;
     // portal batch
     private SpriteBatch batch2;
     // camera and viewport
@@ -51,8 +54,10 @@ public class MainGame implements Screen {
         // initialize the spritebatch
         this.batch = game.getBatch();
         this.shape = p1.getShape();
-        
+
         this.batch2 = game.getBatch2();
+
+        font = new BitmapFont(Gdx.files.internal("arial.fnt"), Gdx.files.internal("arial_0.png"), false);
 
         // set up the camera and view
         this.camera = new OrthographicCamera(WIDTH, HEIGHT);
@@ -79,7 +84,7 @@ public class MainGame implements Screen {
         p1.update(deltaTime);
         // update the world
         world.update(deltaTime);
-
+        // Collisions
         for (Rectangle block : world.getLevels().get(world.getCurrentLevel()).getBlocks()) {
             p1.fixCollision(block);
         }
@@ -94,10 +99,8 @@ public class MainGame implements Screen {
 
         // get the SpriteBatch from the Game
         SpriteBatch batch = game.getBatch();
-        
+
         SpriteBatch batch2 = game.getBatch();
-        
-       
 
         //draw the player
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -105,7 +108,6 @@ public class MainGame implements Screen {
 
         // render the world
         world.render(camera);
-
         // CAMERA
         float levelSizeX = world.getLevels().get(world.getCurrentLevel()).getHighestX();
 
@@ -126,19 +128,32 @@ public class MainGame implements Screen {
         }
 
         camera.update();
+        p1.render(shape, camera);
         batch.setProjectionMatrix(camera.combined);
 
         batch.begin();
 
+        // FON
         // p1.render(batch);
-        p1.render(shape, camera);
-
+        font.setColor(Color.WHITE);
+        // Draw the death counter on the screen
+        font.draw(batch, "Deaths: " + p1.getDeaths(), camera.position.x - WIDTH / 2 + 50, camera.position.y - 200);
+        // Draw the controls on the Menu screen
+        if (world.getCurrentLevel() == 0) {
+            font.draw(batch, "Use W,A,S,D or the arrow keys to move.", 145, 500);
+            font.draw(batch, "Use SPACE, W or the UP key to jump.", 155, 450);
+            font.draw(batch, "Start!", 720, 300);
+        }
+        // Draw instructions on level 4
+        if (world.getCurrentLevel() == 4) {
+            font.draw(batch, "Use the Golden Block to double jump", 1520, 720);
+        }
         batch.end();
-        
+
         batch2.begin();
-        
+
         world.render(batch2);
-        
+
         batch2.end();
     }
 
