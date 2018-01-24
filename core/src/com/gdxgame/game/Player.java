@@ -73,22 +73,12 @@ public class Player {
         this.dy = 0;
 
         this.elapsed = 0;
-        this.atlas = new TextureAtlas("packed/player.atlas");
-        this.stand = atlas.findRegion("stand");
+        //this.atlas = new TextureAtlas("packed/player.atlas");
+        //this.stand = atlas.findRegion("stand");
         this.shape = new ShapeRenderer();
         this.world = world;
-
-        runRight = new Animation(1f / 10f, atlas.findRegions("run"));
-
-        Array<AtlasRegion> runLeftArray = atlas.findRegions("run");
-
-        for (int i = 0; i < runLeftArray.size; i++) {
-            runLeftArray.get(i).flip(true, false);
-
-        }
-
-        runLeft = new Animation(1f / 10f, runLeftArray);
-
+        
+        // 
         this.cameraReset = false;
 
         this.bounds = new Rectangle(x, y, 50, 50);
@@ -255,11 +245,11 @@ public class Player {
 
         // standing
         if (this.dx == 0) {
-            batch.draw(stand, x, y);
+            //batch.draw(stand, x, y);
         } else if (this.dx > 0) {
-            batch.draw(runRight.getKeyFrame(elapsed, true), x, y);
+            //batch.draw(runRight.getKeyFrame(elapsed, true), x, y);
         } else if (this.dx < 0) {
-            batch.draw(runLeft.getKeyFrame(elapsed, true), x, y);
+           // batch.draw(runLeft.getKeyFrame(elapsed, true), x, y);
         }
     }
 
