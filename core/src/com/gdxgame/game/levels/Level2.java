@@ -25,7 +25,7 @@ public class Level2 extends Level {
         
         jumpBoost = new Rectangle[0];
         
-        portal = new Rectangle(2650, 40, 25, 25);
+        portal = new Rectangle(2640, 40, 25, 25);
 
         this.SPAWN_X = 100;
         this.SPAWN_Y = 100;

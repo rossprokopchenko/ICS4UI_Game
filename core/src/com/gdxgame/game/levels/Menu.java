@@ -1,53 +1,49 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 package com.gdxgame.game.levels;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 
 /**
  *
- * @author kwame
+ * @author malij6756
  */
-public class EndScreen extends Level {
+public class Menu extends Level {
 
-    // array of blocks of the level
     private Rectangle[] blocks;
+    private Rectangle portal;
+    private final float SPAWN_X, SPAWN_Y;
 
+    private Rectangle[] jumpBoost;
     // array of kill platforms of the level
     private Rectangle[] killPlats;
 
-    // portal of the level
-    private Rectangle portal;
+    public Menu() {
+        blocks = new Rectangle[6];
+        portal = new Rectangle(745, 200, 25, 25);
+        this.SPAWN_X = 100;
+        this.SPAWN_Y = 100;
 
-    private Rectangle[] jumpBoost;
-
-    // spawn coordinates of the level
-    private final float SPAWN_X, SPAWN_Y;
-
-    public EndScreen() {
-        // initializes blocks
-        blocks = new Rectangle[5];
         // initializes kill platforms
         killPlats = new Rectangle[0];
-        // initializes the portal
-        portal = new Rectangle(775, 220, 25, 25);
-
+        // initializes jump boosts
         jumpBoost = new Rectangle[0];
-
-        // spawn coordinates of the level
-        this.SPAWN_X = 375;
-        this.SPAWN_Y = 20;
-
-        // level's bounds
-        blocks[0] = new Rectangle(-20, 0, 20, 600);
-        blocks[1] = new Rectangle(800, 0, 20, 600);
-        // level's blocks
-        blocks[2] = new Rectangle(0, 0, 800, 20);
-        blocks[3] = new Rectangle(0, 200, 100, 20);
-        blocks[4] = new Rectangle(700, 200, 100, 20);
+        // create blocks
+        blocks[0] = new Rectangle(0, 0, 800, 20);
+        blocks[1] = new Rectangle(600, 150, 200, 20);
+        blocks[2] = new Rectangle(0, 150, 200, 20);
+        blocks[3] = new Rectangle(350, 325, 100, 20);
+        blocks[4] = new Rectangle(-20, 0, 20, 600);
+        blocks[5] = new Rectangle(800, 0, 20, 600);
 
     }
 

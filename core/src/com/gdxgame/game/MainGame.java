@@ -28,10 +28,13 @@ public class MainGame implements Screen {
     private ICS4UIgame game;
     private World world;
     private Player p1;
+
     // sprite batch
-    private SpriteBatch batch;
+    public SpriteBatch batch;
     private ShapeRenderer shape;
     private BitmapFont font;
+    // portal batch
+    private SpriteBatch batch2;
     // camera and viewport
     private OrthographicCamera camera;
     private Viewport view;
@@ -58,6 +61,8 @@ public class MainGame implements Screen {
         // initialize the spritebatch
         this.batch = game.getBatch();
         this.shape = p1.getShape();
+
+        this.batch2 = game.getBatch2();
 
         font = new BitmapFont(Gdx.files.internal("arial.fnt"), Gdx.files.internal("arial_0.png"), false);
 
@@ -89,7 +94,9 @@ public class MainGame implements Screen {
     public void render(float deltaTime) {
         // update the player
         p1.update(deltaTime);
-
+        // update the world
+        world.update(deltaTime);
+        // Collisions
         for (Rectangle block : world.getLevels().get(world.getCurrentLevel()).getBlocks()) {
             p1.fixCollision(block);
         }
@@ -105,13 +112,14 @@ public class MainGame implements Screen {
         // get the SpriteBatch from the Game
         SpriteBatch batch = game.getBatch();
 
+        SpriteBatch batch2 = game.getBatch();
+
         //draw the player
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // render the world
         world.render(camera);
-
         // CAMERA
         float levelSizeX = world.getLevels().get(world.getCurrentLevel()).getHighestX();
 
@@ -131,7 +139,6 @@ public class MainGame implements Screen {
             p1.setCameraReset(false);
         }
 
-
         camera.update();
 
         p1.render(shape, camera);
@@ -142,18 +149,26 @@ public class MainGame implements Screen {
 
         // FONT
         // p1.render(batch);
-
         font.setColor(Color.WHITE);
-        font.draw(batch, "Deaths: " + p1.getDeaths(), camera.position.x - WIDTH / 2 - 75, camera.position.y - 275);
-        font.draw(batch, "Level: " + (world.getCurrentLevel() + 1), camera.position.x - WIDTH / 2 - 75, camera.position.y - 300);
-        font.setColor(Color.RED);
-        font.draw(batch, "Timer: " + timer / 1000, camera.position.x - WIDTH / 2 - 75, camera.position.y - 250);
-        
+        // Draw the death counter on the screen
+        font.draw(batch, "Deaths: " + p1.getDeaths(), camera.position.x - WIDTH / 2 + 50, camera.position.y - 200);
+        // Draw the controls on the Menu screen
+        if (world.getCurrentLevel() == 0) {
+            font.draw(batch, "Use W,A,S,D or the arrow keys to move.", 145, 500);
+            font.draw(batch, "Use SPACE, W or the UP key to jump.", 155, 450);
+            font.draw(batch, "Start!", 720, 300);
+        }
+        // Draw instructions on level 4
+        if (world.getCurrentLevel() == 4) {
+            font.draw(batch, "Use the Golden Block to double jump", 1520, 720);
+        }
         batch.end();
-        
-        millis = elapsedTimeNs / 1000000;
-        timer = millis;
-        elapsedTimeNs = System.nanoTime() - startTime;
+
+        batch2.begin();
+
+        world.render(batch2);
+
+        batch2.end();
     }
 
     @Override
