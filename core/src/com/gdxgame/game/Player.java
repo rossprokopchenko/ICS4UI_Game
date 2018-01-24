@@ -77,7 +77,7 @@ public class Player {
         //this.stand = atlas.findRegion("stand");
         this.shape = new ShapeRenderer();
         this.world = world;
-        
+
         // 
         this.cameraReset = false;
 
@@ -127,7 +127,7 @@ public class Player {
             // teleport the player to the start position of the level
             this.x = world.getLevels().get(world.getCurrentLevel()).getSpawnX();
             this.y = world.getLevels().get(world.getCurrentLevel()).getSpawnY();
-
+            deaths++;
             this.cameraReset = true;
         }
 
@@ -154,7 +154,6 @@ public class Player {
         this.y = this.y + this.dy;
 
 //         System.out.println("x: " + x + "  y: " + y);
-
         // update collision rectangle
         this.bounds.setX(this.x);
         this.bounds.setY(this.y);
@@ -243,7 +242,6 @@ public class Player {
             bounds.setX(this.x);
             bounds.setY(this.y);
             deaths++;
-            System.out.println(deaths);
         }
     }
 
@@ -261,7 +259,7 @@ public class Player {
         } else if (this.dx > 0) {
             //batch.draw(runRight.getKeyFrame(elapsed, true), x, y);
         } else if (this.dx < 0) {
-           // batch.draw(runLeft.getKeyFrame(elapsed, true), x, y);
+            // batch.draw(runLeft.getKeyFrame(elapsed, true), x, y);
         }
     }
 
@@ -298,6 +296,5 @@ public class Player {
     public int getDeaths() {
         return deaths;
     }
-    
-    
+
 }
