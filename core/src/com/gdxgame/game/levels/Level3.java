@@ -23,7 +23,7 @@ public class Level3 extends Level{
 
     public Level3() {
         blocks = new Rectangle[8];
-        portal = new Rectangle(1915, -285, 25, 25);
+        portal = new Rectangle(1915, -275, 25, 25);
         jumpBoost = new Rectangle[0];
         
         killPlats = new Rectangle[2];

@@ -28,7 +28,7 @@ public class Level1 extends Level {
         // initializes kill platforms
         killPlats = new Rectangle[1];
         // initializes the portal
-        portal = new Rectangle(2550, 40, 25, 25);
+        portal = new Rectangle(2540, 40, 25, 25);
 
         jumpBoost = new Rectangle[0];
 

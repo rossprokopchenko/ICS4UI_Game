@@ -25,7 +25,7 @@ public class Level4 extends Level {
         // initializes kill platforms
         killPlats = new Rectangle[10];
         // initializes the portal
-        portal = new Rectangle(1340, 940, 25, 25);
+        portal = new Rectangle(1345, 950, 25, 25);
         // jump boost array
         jumpBoost = new Rectangle[1];
         // spawn coordinates of the level
