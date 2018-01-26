@@ -28,11 +28,11 @@ public class Menu extends Level {
         blocks = new Rectangle[6];
 
         // initializes kill platforms
-        killPlats = new Rectangle[0];
+        killPlats = new Rectangle[1];
         // initializes the portal
         portal = new Rectangle(745, 200, 25, 25);
         // initializes jump boosts
-        jumpBoost = new Rectangle[0];
+        jumpBoost = new Rectangle[1];
         
         // spawn coordinates of the level
         this.SPAWN_X = 100;
