@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.Array;
 
 /**
  *
- * @author malij6756
+ * @author Ross, Junaid, Kwame
  */
 public class Menu extends Level {
 
@@ -29,22 +29,25 @@ public class Menu extends Level {
 
     public Menu() {
         blocks = new Rectangle[6];
-        portal = new Rectangle(745, 200, 25, 25);
+        portal = new Rectangle(745, 170, 25, 25);
         this.SPAWN_X = 100;
         this.SPAWN_Y = 100;
 
         // initializes kill platforms
-        killPlats = new Rectangle[0];
+        killPlats = new Rectangle[1];
         // initializes jump boosts
-        jumpBoost = new Rectangle[0];
+        jumpBoost = new Rectangle[1];
         // create blocks
-        blocks[0] = new Rectangle(0, 0, 800, 20);
-        blocks[1] = new Rectangle(600, 150, 200, 20);
+        blocks[0] = new Rectangle(-20, 0, 20, 600);
+        blocks[1] = new Rectangle(800, 0, 20, 600);
         blocks[2] = new Rectangle(0, 150, 200, 20);
-        blocks[3] = new Rectangle(350, 325, 100, 20);
-        blocks[4] = new Rectangle(-20, 0, 20, 600);
-        blocks[5] = new Rectangle(800, 0, 20, 600);
+        blocks[3] = new Rectangle(600, 125, 200, 20);
+        blocks[4] = new Rectangle(0, 0, 800, 20);
+        blocks[5] = new Rectangle(360, 250, 100, 20);
 
+        // Create a Kill Platform and a Jump Boost
+        killPlats[0] = new Rectangle(600, 325, 200, 20);
+        jumpBoost[0] = new Rectangle(395, 380, 20, 20);
     }
 
     /**

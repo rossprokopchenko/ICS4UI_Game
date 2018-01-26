@@ -8,13 +8,11 @@ import com.gdxgame.game.ICS4UIgame;
 public class DesktopLauncher {
 
     public static void main(String[] arg) {
-        
+
         TexturePacker.process("raw", "packed", "portalPics");
-        
+
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         new LwjglApplication(new ICS4UIgame(), config);
-        
-        
-        
+
     }
 }

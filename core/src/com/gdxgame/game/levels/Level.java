@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Array;
 
 /**
  *
- * @author prokr8056
+ * @author Ross, Kwame, Junaid
  */
 public abstract class Level {
 

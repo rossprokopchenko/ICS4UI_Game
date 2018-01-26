@@ -13,7 +13,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -160,8 +159,10 @@ public class MainGame implements Screen {
         
         // Draw the controls on the Menu screen
         if (world.getCurrentLevel() == 0) {
-            font.draw(batch, "Use W,A,S,D or the arrow keys to move.", 145, 500);
-            font.draw(batch, "Use SPACE, W or the UP key to jump.", 155, 450);
+            font.draw(batch, "Use W,A,S,D or the arrow keys to move.", 145, -50);
+            font.draw(batch, "Use SPACE, W or the UP key to jump.", 155, 500);
+            font.draw(batch, "The Golden Block lets you jump again", 150, 450);
+            font.draw(batch, "Avoid the Red Platforms.", 225, -100);
             font.draw(batch, "Start!", 720, 300);
         }
         // Draw instructions on level 4
