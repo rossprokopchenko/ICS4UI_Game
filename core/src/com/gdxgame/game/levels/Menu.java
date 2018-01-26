@@ -15,7 +15,7 @@ import com.badlogic.gdx.utils.Array;
 
 /**
  *
- * @author malij6756
+ * @author Ross, Junaid, Kwame
  */
 public class Menu extends Level {
 
