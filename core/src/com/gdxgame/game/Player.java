@@ -10,19 +10,30 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
 
 /**
  *
  * @author Ross, Kwame, Junaid
  */
 public class Player {
+
+    // shape renderer and world
+    private ShapeRenderer shape;
+    private World world;
+    // rectangle bounds of the player
+    private Rectangle bounds;
+
+    // sprite 
+    private Animation<TextureRegion> runRight;
+    private Animation<TextureRegion> runLeft;
+    private TextureRegion stand;
+    private TextureAtlas atlas;
+    // elapsed time for animation
+    private float elapsed;
 
     // gravity
     private float gravity;
@@ -45,45 +56,46 @@ public class Player {
     private final float START_X, START_Y;
     // max y velocity
     private final float MAX_DY = 18.1f;
-    // sprite 
-    private Animation<TextureRegion> runRight;
-    private Animation<TextureRegion> runLeft;
-    private TextureRegion stand;
-    private TextureAtlas atlas;
-    // elapsed time for animation
-    private float elapsed;
-    // shape renderer and world
-    private ShapeRenderer shape;
-    private World world;
-    // rectangle bounds of the player
-    private Rectangle bounds;
+
     // death counter
     private int deaths;
 
+    /**
+     * Player constructor
+     *
+     * @param x start X coordinate of the player
+     * @param y start Y coordinate of the player
+     * @param world the world class that the player uses
+     */
     public Player(float x, float y, World world) {
+        // link the worlds
+        this.world = world;
+        // intialize shape renderer
+        this.shape = new ShapeRenderer();
+        // initialize the start coordinates
         this.START_X = x;
         this.START_Y = y;
 
         this.x = START_X;
         this.y = START_Y;
 
+        // gravity force
         this.gravity = 1.9f;
 
         this.dx = 0;
         this.dy = 0;
-
         this.elapsed = 0;
-        //this.atlas = new TextureAtlas("packed/player.atlas");
-        //this.stand = atlas.findRegion("stand");
-        this.shape = new ShapeRenderer();
-        this.world = world;
 
-        // 
         this.cameraReset = false;
 
         this.bounds = new Rectangle(x, y, 50, 50);
     }
 
+    /**
+     * Input listener for the player
+     *
+     * @param deltaTime
+     */
     public void update(float deltaTime) {
         // if pressing right (right arrow or D)
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
@@ -109,8 +121,10 @@ public class Player {
             this.elapsed = 0;
         }
 
+        // if player presses the up arrow, W or space
         if ((Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)
                 || Gdx.input.isKeyPressed(Input.Keys.SPACE))) {
+
             holdingUp = true;
         } else {
             holdingUp = false;
@@ -127,19 +141,22 @@ public class Player {
             // teleport the player to the start position of the level
             this.x = world.getLevels().get(world.getCurrentLevel()).getSpawnX();
             this.y = world.getLevels().get(world.getCurrentLevel()).getSpawnY();
+            // update death counter
             deaths++;
+            // reset camera
             this.cameraReset = true;
         }
 
+        // if pressed N
         if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
-
+            // as long as the player is not in the last level
             if (world.getCurrentLevel() < world.getNumLevels() - 1) {
+                // set the level to the next
                 world.setCurrentLevel(world.getCurrentLevel() + 1);
-
                 // teleport the player to the start position of the level
                 this.x = world.getLevels().get(world.getCurrentLevel()).getSpawnX();
                 this.y = world.getLevels().get(world.getCurrentLevel()).getSpawnY();
-
+                // reset camera to start position of the level
                 this.cameraReset = true;
             }
         }
@@ -153,12 +170,16 @@ public class Player {
         this.x = this.x + this.dx;
         this.y = this.y + this.dy;
 
-//         System.out.println("x: " + x + "  y: " + y);
         // update collision rectangle
         this.bounds.setX(this.x);
         this.bounds.setY(this.y);
     }
 
+    /**
+     * Fixes collision bounds of the player
+     *
+     * @param block the block that the player collides with
+     */
     public void fixCollision(Rectangle block) {
         // are they colliding?
         if (bounds.overlaps(block)) {
@@ -208,7 +229,7 @@ public class Player {
             // teleport the player to the start position of the level
             this.x = world.getLevels().get(world.getCurrentLevel()).getSpawnX();
             this.y = world.getLevels().get(world.getCurrentLevel()).getSpawnY();
-
+            // reset camera
             this.cameraReset = true;
 
             // update the collision box to match the player
@@ -220,7 +241,7 @@ public class Player {
             // teleport the player to the start position of the level
             this.x = world.getLevels().get(world.getCurrentLevel()).getSpawnX();
             this.y = world.getLevels().get(world.getCurrentLevel()).getSpawnY();
-
+            // reset camera
             this.cameraReset = true;
 
             // update the collision box to match the player
@@ -229,70 +250,104 @@ public class Player {
         }
     }
 
+    /**
+     * Player collision with the red platforms
+     * @param rect the red platform that the player collides with
+     */
     public void collisionRect(Rectangle rect) {
+        // if player overlaps one of the red platforms
         if (bounds.overlaps(rect)) {
             // teleport the player to the start position of the level
             this.x = world.getLevels().get(world.getCurrentLevel()).getSpawnX();
             this.y = world.getLevels().get(world.getCurrentLevel()).getSpawnY();
-
+            // reset camera
             this.cameraReset = true;
+            // reset player's jump
             this.jumped = true;
 
             // update the collision box to match the player
             bounds.setX(this.x);
             bounds.setY(this.y);
+            // update death counter
             deaths++;
         }
     }
 
+    /**
+     * If player collides with the jump boost block
+     * @param rect the jump boost block
+     */
     public void collisionJumpBoost(Rectangle rect) {
+        // if player collides with the jump boost
         if (bounds.overlaps(rect) && !holdingUp) {
+            // reset player's jump
             this.jumped = false;
         }
     }
 
-    public void render(SpriteBatch batch) {
-
-        // standing
-        if (this.dx == 0) {
-            //batch.draw(stand, x, y);
-        } else if (this.dx > 0) {
-            //batch.draw(runRight.getKeyFrame(elapsed, true), x, y);
-        } else if (this.dx < 0) {
-            // batch.draw(runLeft.getKeyFrame(elapsed, true), x, y);
-        }
-    }
-
+    /**
+     * Render the player
+     * @param shape the shape renderer to use
+     * @param camera the camera that the world is using
+     */
     public void render(ShapeRenderer shape, OrthographicCamera camera) {
+        // link the shape and the camera
         shape.setProjectionMatrix(camera.combined);
+        // set the shape type to filled
         shape.begin(ShapeRenderer.ShapeType.Filled);
 
+        // set the color
         shape.setColor(Color.SKY);
+        // render the player considering the bounds
         shape.rect(bounds.x, bounds.y, bounds.width, bounds.height);
 
         shape.end();
     }
 
+    /**
+     * Gets the X coordinate of the player
+     * @return the X coordinate of the player
+     */
     public float getX() {
         return x;
     }
 
+    /**
+     * Gets the Y coordinate of the player
+     * @return the Y coordinate of the player
+     */
     public float getY() {
         return y;
     }
 
+    /**
+     * Gets the shape renderer that the player class uses
+     * @return the shape renderer
+     */
     public ShapeRenderer getShape() {
         return this.shape;
     }
 
+    /**
+     * Get the camera reset boolean
+     * @return the boolean regarding to what cameraReset is set to
+     */
     public boolean getCameraReset() {
         return cameraReset;
     }
 
+    /**
+     * Set the camera reset boolean to true/false
+     * @param b true/false statement
+     */
     public void setCameraReset(boolean b) {
         cameraReset = b;
     }
 
+    /**
+     * Get the amount of deaths that the player has
+     * @return the integer of deaths 
+     */
     public int getDeaths() {
         return deaths;
     }
