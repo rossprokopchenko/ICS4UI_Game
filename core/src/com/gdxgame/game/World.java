@@ -33,48 +33,49 @@ public class World {
     // current level number
     private int currentLevel;
 
+    // portal animation variables
     private Animation<TextureRegion> portalTurn;
-
     private TextureAtlas atlas;
-
     private float elapsed;
 
+    /**
+     * World constructor
+     */
     public World() {
         // set the current level to the first
         currentLevel = 0;
         // initializes the levels array
-        this.levels = new Array();
+        levels = new Array();
         // adds all levels created to the array
-        this.levels.add(new Menu());
-        this.levels.add(new Level1());
-        this.levels.add(new Level2());
-        this.levels.add(new Level3());
+        levels.add(new Menu());
+        levels.add(new Level1());
+        levels.add(new Level2());
+        levels.add(new Level3());
+        levels.add(new Level4());
+        levels.add(new Level5());
 
-        this.atlas = new TextureAtlas("packed/portalPics.atlas");
-
+        // load in the portal frames
+        atlas = new TextureAtlas("portalPics.atlas");
         portalTurn = new Animation(1f / 10f, atlas.findRegions("frame"));
-
-        this.levels.add(new Level4());
-        this.levels.add(new Level5());
-        //      this.levels.add(new EndScreen());
+        // get the portal Rectangle of the current level
+        portal = levels.get(currentLevel).getPortal();
 
         // initializes the shape renderer
-        this.shape = new ShapeRenderer();
-
-        // get the portal Rectangle of the current level
-        portal = levels.get(this.currentLevel).getPortal();
-
+        shape = new ShapeRenderer();
     }
 
+    /**
+     * Render all shapes
+     * @param camera the camera that will show the rendered shapes
+     */
     public void render(OrthographicCamera camera) {
-// BLOCKS
-
+        // BLOCKS
         // render the shapes according to the camera
         shape.setProjectionMatrix(camera.combined);
         // set the shape type
         shape.begin(ShapeRenderer.ShapeType.Line);
 
-        // renders all shapes of the level
+        // renders all green blocks of the level
         for (int i = 0; i < levels.get(this.currentLevel).getNumBlocks(); i++) {
 
             // set the color of shapes
@@ -84,47 +85,52 @@ public class World {
                 shape.setColor(Color.CORAL);
             }
 
+            // x, y, width, height of each block in the level
             float x = levels.get(this.currentLevel).getBlock(i).x;
             float y = levels.get(this.currentLevel).getBlock(i).y;
             float width = levels.get(this.currentLevel).getBlock(i).width;
             float height = levels.get(this.currentLevel).getBlock(i).height;
 
+            // draw the block
             shape.rect(x, y, width, height);
 
         }
 
-        // kill platforms
+        // renders all red blocks of the level
         for (int i = 0; i < levels.get(this.currentLevel).getNumKillPlats(); i++) {
-
+            // set the color of the blocks
             shape.setColor(Color.RED);
 
+            // x, y, width, height of each block in the level
             float x = levels.get(this.currentLevel).getKillPlat(i).x;
             float y = levels.get(this.currentLevel).getKillPlat(i).y;
             float width = levels.get(this.currentLevel).getKillPlat(i).width;
             float height = levels.get(this.currentLevel).getKillPlat(i).height;
 
+            // draw the block
             shape.rect(x, y, width, height);
         }
 
+        // render all jump boosts of the level
         for (int i = 0; i < levels.get(this.currentLevel).getNumJumpBoosts(); i++) {
-
+            // set the color of the jump boost block
             shape.setColor(Color.GOLD);
 
+            // x, y, width, height of each block in the level
             float x = levels.get(this.currentLevel).getJumpBoost(i).x;
             float y = levels.get(this.currentLevel).getJumpBoost(i).y;
             float width = levels.get(this.currentLevel).getJumpBoost(i).width;
             float height = levels.get(this.currentLevel).getJumpBoost(i).height;
 
+            // draw the block
             shape.rect(x, y, width, height);
         }
 
         // PORTAL
         // sets the color of the portal
-        shape.setColor(Color.SKY);
+        shape.setColor(Color.CLEAR);
         // draws the portal
         shape.rect(portal.x, portal.y, portal.width, portal.height);
-
-        shape.setColor(Color.BLACK);
 
         // get the portal Rectangle of the current level
         portal = levels.get(this.currentLevel).getPortal();
@@ -133,12 +139,19 @@ public class World {
         shape.end();
     }
 
+    /**
+     * Render the portal key frames
+     * @param batch the spritebatch to use
+     */
     public void render(SpriteBatch batch) {
         batch.draw(portalTurn.getKeyFrame(this.elapsed), portal.x - 20, portal.y - 20, 70, 70);
     }
 
+    /**
+     * Update the elapsed
+     * @param deltaTime 
+     */
     public void update(float deltaTime) {
-
         if (this.elapsed < 0.8) {
             this.elapsed = deltaTime + this.elapsed;
         } else {
@@ -146,30 +159,58 @@ public class World {
         }
     }
 
+    /**
+     * Return a green block of the level
+     * @param i index of the block according to the block array of the level
+     * @return the block
+     */
     public Rectangle[] getBlocks(int i) {
         return levels.get(i).getBlocks();
     }
 
+    /**
+     * Get the amount of levels added to the level
+     * @return the size of the level array
+     */
     public int getNumLevels() {
         return levels.size;
     }
 
+    /**
+     * Get the level array created
+     * @return the level array
+     */
     public Array<Level> getLevels() {
         return levels;
     }
 
+    /**
+     * Get the current level that the player is playing
+     * @return the current level variable
+     */
     public int getCurrentLevel() {
         return currentLevel;
     }
 
+    /**
+     * Set the current level
+     * @param currentLevel the level to set to
+     */
     public void setCurrentLevel(int currentLevel) {
         this.currentLevel = currentLevel;
     }
 
+    /**
+     * Get the portal rectangle
+     * @return the portal rectangle
+     */
     public Rectangle getPortal() {
         return portal;
     }
 
+    /**
+     * Dispose of the atlas
+     */
     public void dispose() {
         atlas.dispose();
     }

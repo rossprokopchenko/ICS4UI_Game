@@ -10,15 +10,12 @@ public class Level1 extends Level {
 
     // array of blocks of the level
     private Rectangle[] blocks;
-
     // array of kill platforms of the level
     private Rectangle[] killPlats;
-
     // portal of the level
     private Rectangle portal;
-
+    // jump boost array of the level
     private Rectangle[] jumpBoost;
-
     // spawn coordinates of the level
     private final float SPAWN_X, SPAWN_Y;
 
@@ -29,7 +26,7 @@ public class Level1 extends Level {
         killPlats = new Rectangle[1];
         // initializes the portal
         portal = new Rectangle(2540, 40, 25, 25);
-
+        // initializes the jump boost array
         jumpBoost = new Rectangle[0];
 
         // spawn coordinates of the level
@@ -70,61 +67,109 @@ public class Level1 extends Level {
         return blocks[i];
     }
 
+    /**
+     * Get the number of green blocks in the level
+     * @return the blocks array length
+     */
     @Override
     public int getNumBlocks() {
         return blocks.length;
     }
 
+    /**
+     * Gets the red platform array
+     * @return the killPlats array 
+     */
     @Override
     public Rectangle[] getKillPlats() {
         return killPlats;
     }
 
+    /**
+     * Gets a specific red platform in the killPlats array
+     * @param i the index of the platform
+     * @return the red platform at the index
+     */
     @Override
     public Rectangle getKillPlat(int i) {
         return killPlats[i];
     }
 
+    /**
+     * Get the amount of red platforms in the level
+     * @return the killPlats array length
+     */
     @Override
     public int getNumKillPlats() {
         return killPlats.length;
     }
 
+    /**
+     * Get the jump boost array of the level
+     * @return the jumpBoosts array
+     */
     @Override
     public Rectangle[] getJumpBoosts() {
         return jumpBoost;
     }
 
+    /**
+     * Get a specific jump boost block
+     * @param i the index of the jump boost in the array
+     * @return the jump boost at the index in the array
+     */
     @Override
     public Rectangle getJumpBoost(int i) {
         return jumpBoost[i];
     }
 
+    /**
+     * Get the amount of jump boosts
+     * @return the jumpBoost array length
+     */
     @Override
     public int getNumJumpBoosts() {
         return jumpBoost.length;
     }
 
+    /**
+     * Get the end portal rectangle of the level
+     * @return the portal rectangle
+     */
     @Override
     public Rectangle getPortal() {
         return portal;
     }
 
+    /**
+     * Get the spawn X coordinate of the level
+     * @return SPAWN_X
+     */
     @Override
     public float getSpawnX() {
         return SPAWN_X;
     }
 
+    /**
+     * Get the spawn Y coordinate of the level
+     * @return SPAWN_Y
+     */
     @Override
     public float getSpawnY() {
         return SPAWN_Y;
     }
 
+    /**
+     * Get the highest X coordinate of the level
+     * @return the calculated highest X coordinate
+     */
     @Override
     public float getHighestX() {
         float x = 0;
 
+        // scan through all the green blocks of the level
         for (int i = 2; i < blocks.length; i++) {
+            // get the highest X + WIDTH value
             if (x < blocks[i].x) {
                 x = blocks[i].x + blocks[i].width;
             }
@@ -133,14 +178,21 @@ public class Level1 extends Level {
         return x;
     }
 
+    /**
+     * Get the lowest Y coordinate of the level
+     * @return the calculated lowest Y coordinate
+     */
     @Override
     public float getLowestY() {
         float y = 0;
-
+        
+        // scan through all the green blocks of the level
         for (int i = 2; i < blocks.length; i++) {
+            // if Y is lower than the Y of the block - do nothing
             if (y < blocks[i].y) {
 
             } else {
+                // set the lowest Y value
                 y = blocks[i].y - blocks[i].height;
             }
         }
@@ -148,11 +200,17 @@ public class Level1 extends Level {
         return y;
     }
 
+    /**
+     * Get the highest Y coordinate of the level
+     * @return the calculated highest Y coordinate
+     */
     @Override
     public float getHighestY() {
         float y = 0;
 
+        // scan through all the green blocks of the level
         for (int i = 2; i < blocks.length; i++) {
+            // calculates the highest Y value of the level
             if (y < blocks[i].y) {
                 y = blocks[i].y;
             }
@@ -160,5 +218,4 @@ public class Level1 extends Level {
 
         return y;
     }
-
 }
