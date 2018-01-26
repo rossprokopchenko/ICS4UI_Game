@@ -29,7 +29,7 @@ public class Menu extends Level {
 
     public Menu() {
         blocks = new Rectangle[6];
-        portal = new Rectangle(745, 200, 25, 25);
+        portal = new Rectangle(745, 170, 25, 25);
         this.SPAWN_X = 100;
         this.SPAWN_Y = 100;
 
